@@ -100,7 +100,7 @@ Sample Sprint Review.png
    - This will install all required dependencies like mysql, cors, body-parser, express middleware, etc.
    - The way Node projects work is that all meta data and dependencies are present int the package.json. 
 3. When all the dependencies are successfully installed run ```npm run start```.
-   - This will start the backend server on port 5000
+   - This will start the backend server on port 5001
 
 As of now the host of the database, password and few other important information is hard-coded in the code, which is NOT a good practice.
 Later the project wil have .env files to protect such data. But for time being we can move ahead.
