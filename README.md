@@ -90,6 +90,7 @@ Sample Sprint Review.png
 
 ## For Developers
 
+
 ### About the Repo
 1. The repo consists of server folder which has all the backend and the middleware code for the application
 2. In due time, the repo will also consist of client folder having all the code for the frontend part.
@@ -114,3 +115,10 @@ Later the project wil have .env files to protect such data. But for time being w
 If both these tests are working, it indicates that server is up and running, ready to take requests and the connection to database(AWS RDS) is established and queries are running
 
 Let me know if you are stuck anywhere....!!
+
+## General API concensus
+1. The code is structured such that it will have service, controllers and routes.
+2. Every entity like gate, flight, terminal will have these three componenets. 
+3. Controllers react with front end and are responsible for calling services
+4. Routes directs control to specific controllers
+5. Service will handle the business logic and talk to Database(RDS)
