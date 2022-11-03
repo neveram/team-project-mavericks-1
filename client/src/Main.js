@@ -2,18 +2,19 @@
 
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ArrivalFlightTable from './components/flight/listArrivalFlights';
+import FlightForm from './components/flight/FlightForm';
+import ArrivalFlightTable from './components/flight/ArrivalFlightsTable';
+import ArilineFlightsTable from './components/flight/AirlineFlightsTable';
 
 const Main = () => {
     const [user, setUser] = useState();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [authState, setAuthState] = useState(false);
 
     return (
         <div>
             {!loading && (
                 <>
-
                         <Router>
                             <Routes>
                                 {/* <Route path="/Dashboard"
@@ -24,6 +25,12 @@ const Main = () => {
                                 /> */}
                                 <Route path="/arrival-flights"
                                     element={<ArrivalFlightTable />}
+                                />
+                                <Route path="/flight/new"
+                                    element={<FlightForm />}
+                                />
+                                <Route path="/airline-flights"
+                                    element={<ArilineFlightsTable/>}
                                 />
                                 {/* <Route path="project/:id"
                                     element={<PrivateRoute path="project/:id"
