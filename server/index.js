@@ -10,6 +10,7 @@ import util from 'util';
 
 import testRouter from './routes/testRoutes.js';
 import flightRouter from './routes/flightRoutes.js'
+import terminalRouter from './routes/terminalRoutes.js'
 
 const port = 5001;
 const corsConfig = {
@@ -70,3 +71,4 @@ connection.query = util.promisify(connection.query).bind(connection);
 //Primary Routes
 app.use('/test', testRouter);
 app.use('/flight', flightRouter);
+app.use('/terminal', terminalRouter);
