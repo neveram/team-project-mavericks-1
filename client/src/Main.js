@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FlightForm from './components/flight/FlightForm';
 import ArrivalFlightTable from './components/flight/ArrivalFlightsTable';
 import ArilineFlightsTable from './components/flight/AirlineFlightsTable';
+import AirportGates from './components/AirportGates';
+import GateTable from './components/GateTable';
 
 const Main = () => {
     const [user, setUser] = useState();
@@ -32,6 +34,12 @@ const Main = () => {
                                 <Route path="/airline-flights"
                                     element={<ArilineFlightsTable/>}
                                 />
+                                <Route path="/airport-gates"
+                                    element={<AirportGates/>}
+                                />
+                                <Route path="/gates"
+                                    element={<GateTable/>}
+                                    />
                                 {/* <Route path="project/:id"
                                     element={<PrivateRoute path="project/:id"
                                         element={<CreateProject />}
