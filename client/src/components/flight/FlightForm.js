@@ -102,7 +102,7 @@ const FlightForm = () => {
       ) : (
 
         <>
-          <div style={{ display: 'flex', justifyContent: 'center'}}>
+          <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: "#21b6ae"}}>
             <Card variant="outlined" sx={{width: '80%'}}>
               <CardHeader title="FlightDetails">
 

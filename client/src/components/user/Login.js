@@ -70,7 +70,7 @@ const Login = () => {
             sm={4}
             md={7}
             sx={{
-                backgroundImage: 'url(https://innovationatwork.ieee.org/wp-content/uploads/2018/07/iStock-829197466-1024x683.jpg)',
+                backgroundImage: 'url(https://www.frost.com/wp-content/uploads/2021/06/Total-Airport-Maintenance-Copy-1080x675.jpg)',
                 backgroundRepeat: 'no-repeat',
                 backgroundColor: (t) =>
                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -89,6 +89,7 @@ const Login = () => {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <Avatar src="/broken-image.jpg" />
                 <h1 />
                 </Avatar>
                 <Typography component="h1" variant="h5">
@@ -121,7 +122,9 @@ const Login = () => {
                     <Radio value={JSON.stringify(row)} checked={row.carId === props.ride.carId} onChange={selectCar}>Admin</Radio> */}
                     
                 </Grid>
-                <br></br>
+                <br>
+                
+                </br>
 
                 <TextField
                     margin="normal"
