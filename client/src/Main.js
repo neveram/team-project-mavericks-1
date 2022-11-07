@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FlightForm from './components/flight/FlightForm';
 import ArrivalFlightTable from './components/flight/ArrivalFlightsTable';
 import ArilineFlightsTable from './components/flight/AirlineFlightsTable';
+import Login from './components/user/Login';
+import AuthContext from './contexts/AuthContextProvider';
+import PrivatePath from './components/PrivatePath';
 
 const Main = () => {
     const [user, setUser] = useState();
@@ -15,23 +18,27 @@ const Main = () => {
         <div>
             {!loading && (
                 <>
+                    <AuthContext>
                         <Router>
                             <Routes>
                                 {/* <Route path="/Dashboard"
                                     element={<Dashboard />}
-                                />
+                                />*/}
                                 <Route path="/login"
                                     element={<Login />}
-                                /> */}
+                                /> 
                                 <Route path="/arrival-flights"
                                     element={<ArrivalFlightTable />}
                                 />
                                 <Route path="/flight/new"
                                     element={<FlightForm />}
                                 />
-                                <Route path="/airline-flights"
-                                    element={<ArilineFlightsTable/>}
-                                />
+                                <Route path="/airline-flights" element={
+                                    <PrivatePath>
+                                        <ArilineFlightsTable/>
+                                    </PrivatePath>
+                                }></Route>
+                                
                                 {/* <Route path="project/:id"
                                     element={<PrivateRoute path="project/:id"
                                         element={<CreateProject />}
@@ -94,7 +101,7 @@ const Main = () => {
                                 /> */}
                             </Routes>
                         </Router>
-                
+                        </AuthContext>
                 </>
             )
             }
