@@ -12,11 +12,12 @@ class GateService {
             } = gate;
 
             let gateUpdateQuery = `UPDATE gate SET
-            terminal = '${terminal_number}',
-            gate = '${gate_number}',
-            status = '${status}'
-            WHERE id = '${gate_id}';
+            ${terminal_number?`terminal= '${terminal_number}',`:""}
+            ${gate_number?`gate = '${gate_number}',`:""}
+            ${status?`status = '${status}'`:""}
+            WHERE id = '${gate_id}'
             `;
+            console.log("update q",gateUpdateQuery);
             let gateAddQuery = `INSERT INTO gate (
                 terminal,
                 gate,
@@ -60,6 +61,28 @@ class GateService {
           const response = await  connection.query(getProjectsBasedOnId);
           const parsedResponse = parseRowDataPacket(response);
       
+          return{
+            success: true,
+            data: parsedResponse
+          }
+        }
+        catch(e){
+          console.log(e);
+          return{
+            success: false,
+            message: e.message
+          }
+        }
+      }
+
+      getGateBasedOnTerminal = async ({terminal_number}) => {
+        const getGateListBasedOnTerminalQuery = `select t.terminal as terminal,gate,g.status as status  from 
+        gate as g inner join terminal as t on g.terminal = t.id where t.id = ${terminal_number};`
+  
+        try{
+          const response = await connection.query(getGateListBasedOnTerminalQuery);
+          const parsedResponse = parseRowDataPacket(response);
+  
           return{
             success: true,
             data: parsedResponse

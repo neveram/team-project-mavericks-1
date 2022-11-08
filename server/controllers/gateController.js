@@ -20,15 +20,15 @@ class GateController {
             sendInternalServerError(res);
         }
     }
-    // getTerminalBasedOnAirport = async(req, res) => {
-    //     const serviceResponse = await TerminalService.getTerminaltListBasedOnAirport(req.query);
-    //     if(serviceResponse.success == true){
-    //         sendCustomSuccess(res, serviceResponse.data);
-    //     }
-    //     else{
-    //         sendInternalServerError(res);
-    //     }
-    // }
+    getGateBasedOnTerminal = async(req, res) => {
+        const serviceResponse = await GateService.getGateBasedOnTerminal(req.query);
+        if(serviceResponse.success == true){
+            sendCustomSuccess(res, serviceResponse.data);
+        }
+        else{
+            sendInternalServerError(res);
+        }
+    }
 }
 
 export default new GateController();
