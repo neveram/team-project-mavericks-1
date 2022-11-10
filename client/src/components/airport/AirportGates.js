@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { fetchFlightListService } from '../services/flightService';
+import { fetchTerminalListService } from '../../services/terminalService';
 import GateTable from './GateTable';
 
 function createData(terminal) {
     return { terminal};
   }
   
-  const rows = [
-    createData(1),
-    createData(2),
-    createData(3),
-  ];
+  // const rows = [
+  //   createData(1),
+  //   createData(2),
+  //   createData(3),
+  // ];
   
 
 const AirportGates = () => {
     const [selectedTerminal, setSelectedTerminal] = useState(1);
-    const [flightListState, setFlightListState] = useState([]);
+    const [terminalListState, setTerminalListState] = useState([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
@@ -27,13 +27,13 @@ const AirportGates = () => {
         setSelectedTerminal(e.target.value);
       }
       useEffect(() => {
-        fetchFlightListData();
+        fetchTerminalListData();
       }, []);
     
-      const fetchFlightListData = async () => {
-        const serviceResponse = await fetchFlightListService();
+      const fetchTerminalListData = async () => {
+        const serviceResponse = await fetchTerminalListService();
         if (serviceResponse.status === 200) {
-          setFlightListState(serviceResponse.data.payload);
+          setTerminalListState(serviceResponse.data.payload);
           setLoading(false);
         }
         else {
@@ -69,8 +69,8 @@ const AirportGates = () => {
                     label="Airport Terminal"
                     onChange={handleTerminalChange}
                   >
-                    {rows.map((row)=>(
-                    <MenuItem value={row.terminal}>Terminal {row.terminal}</MenuItem>                      
+                    {terminalListState.map((row)=>(
+                    <MenuItem key={row.terminal} value={row.terminal}>Terminal {row.terminal}</MenuItem>                      
                     ))}
                     {/* <MenuItem value={2}>Terminal 2</MenuItem>
                     <MenuItem value={3}>Terminal 3</MenuItem> */}

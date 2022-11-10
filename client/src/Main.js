@@ -8,8 +8,8 @@ import ArilineFlightsTable from './components/flight/AirlineFlightsTable';
 import Login from './components/user/Login';
 import AuthContext from './contexts/AuthContextProvider';
 import PrivatePath from './components/PrivatePath';
-import AirportGates from './components/AirportGates';
-import GateTable from './components/GateTable';
+import AirportGates from './components/airport/AirportGates';
+import GateTable from './components/airport/GateTable';
 
 
 const Main = () => {
