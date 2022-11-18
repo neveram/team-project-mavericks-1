@@ -10,6 +10,7 @@ import AuthContext from './contexts/AuthContextProvider';
 import PrivatePath from './components/PrivatePath';
 import AirportGates from './components/airport/AirportGates';
 import GateTable from './components/airport/GateTable';
+import TerminalForm from './components/airport/TerminalForm';
 
 
 const Main = () => {
@@ -35,6 +36,12 @@ const Main = () => {
                                 />
                                 <Route path="/flight/new"
                                     element={<FlightForm />}
+                                />
+                                    <Route path="/terminal/new"
+                                    element={<TerminalForm />}
+                                />
+                            <Route path="/terminal/:id"
+                                    element={<TerminalForm />}
                                 />
                                 <Route path="/flight/update/:id"
                                     element={

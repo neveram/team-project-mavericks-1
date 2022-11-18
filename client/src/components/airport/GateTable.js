@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import { fetchGateListService } from '../../services/gateService';
+import { fetchGateListService,fetchGateListForTerminalService } from '../../services/gateService';
 
 function createData(terminal,gateNumber,gateStatus) {
     return { terminal,gateNumber,gateStatus };
@@ -50,6 +50,7 @@ const GateTable = ({currentTerminal}) => {
     }
     return (
 <Paper elevation={3}>
+  { gateListState.filter((row)=>row.terminal == currentTerminal).length>0?(
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -84,7 +85,9 @@ const GateTable = ({currentTerminal}) => {
                 </TableBody>
               </Table>
             </TableContainer>
-        </Paper>
+ ):((
+  <h1 style={{padding: '25px'}}>No Gates</h1>
+))} </Paper>
     );
 };
 

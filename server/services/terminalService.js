@@ -15,7 +15,7 @@ class TerminalService {
             terminal = '${terminal_number}',
             airport = '${airport}',
             status = '${status}'
-            WHERE terminal_id = '${terminal_id}';
+            WHERE id = '${terminal_id}';
             `;
             let terminalAddQuery = `INSERT INTO terminal (
                 terminal,
@@ -73,6 +73,29 @@ class TerminalService {
           }
         }
       }
+      getTerminalDetailsById = async ({id: terminal_id}) => {
+        try{
+          const getTerminalDetailsByIdQuery = `select * from terminal where id = ${terminal_id};`
+          const response = await connection.query(getTerminalDetailsByIdQuery);
+          console.log("fetch terminal",getTerminalDetailsByIdQuery);
+          const parsedResponse = parseRowDataPacket(response);
+  
+          return{
+            success: true,
+            data: parsedResponse
+          }
+        }
+        catch(e){
+          console.log(e);
+          return {
+            success: false, 
+            message: e.message
+          }
+        }
+      }
+
+
+      
 }
 
 

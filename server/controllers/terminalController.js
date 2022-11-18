@@ -29,6 +29,16 @@ class TerminalController {
             sendInternalServerError(res);
         }
     }
+
+    getTerminalDetailsBasedOnId = async(req, res) => {
+        const serviceResponse = await TerminalService.getTerminalDetailsById(req.params);
+        if(serviceResponse.success == true){
+            sendCustomSuccess(res, serviceResponse.data);
+        }
+        else{
+            sendInternalServerError(res);
+        }
+    }
 }
 
 export default new TerminalController();
