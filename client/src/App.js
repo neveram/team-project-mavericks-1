@@ -1,5 +1,5 @@
 import './App.css';
-import Main from './Main';
+import Main from './Main'
 import React from 'react';
 import ArrivalFlightTable from './components/flight/listArrivalFlights';
 function App() {
