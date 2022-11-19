@@ -1,9 +1,9 @@
-import FlightService from "../services/flightService.js";
+import TerminalService from "../services/terminalService.js";
 import {sendCustomSuccess, sendInternalServerError} from './common.js';
 
-class FlightController {
-    addFlight = async (req, res) => {
-        const serviceResponse = await FlightService.addFlight(req.body);
+class TerminalController {
+    addTerminal = async (req, res) => {
+        const serviceResponse = await TerminalService.addTerminal(req.body);
         if(serviceResponse.success ===  true){
             sendCustomSuccess(res, serviceResponse.data);
         }
@@ -11,8 +11,8 @@ class FlightController {
             sendInternalServerError(res);
         }
     }
-    getFlight = async (req, res) => {
-        const serviceResponse = await FlightService.getFlightList(req.body);
+    getTerminal = async (req, res) => {
+        const serviceResponse = await TerminalService.getTerminalList(req.body);
         if(serviceResponse.success ===  true){
             sendCustomSuccess(res, serviceResponse.data);
         }
@@ -20,8 +20,8 @@ class FlightController {
             sendInternalServerError(res);
         }
     }
-    getFlightBasedOnAirline = async(req, res) => {
-        const serviceResponse = await FlightService.getFlightListBasedOnAirline(req.query);
+    getTerminalBasedOnAirport = async(req, res) => {
+        const serviceResponse = await TerminalService.getTerminaltListBasedOnAirport(req.query);
         if(serviceResponse.success == true){
             sendCustomSuccess(res, serviceResponse.data);
         }
@@ -31,4 +31,4 @@ class FlightController {
     }
 }
 
-export default new FlightController();
+export default new TerminalController();

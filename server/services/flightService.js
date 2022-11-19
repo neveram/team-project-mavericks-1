@@ -15,7 +15,6 @@ class FlightService {
             timeOfFlight : time_of_flight
         } = flight;
     
-    
         let flightUpdateQuery = `UPDATE flight SET
             flight_number = '${flight_number}',
             airline_id = '${airline_id}',
@@ -63,6 +62,47 @@ class FlightService {
             message:  e.message
         }
         }
+    }
+    getFlightList = async () =>{ 
+      const getProjectsBasedOnId = `SELECT * FROM flight`;
+      try{
+        const response = await  connection.query(getProjectsBasedOnId);
+        const parsedResponse = parseRowDataPacket(response);
+    
+        return{
+          success: true,
+          data: parsedResponse
+        }
+      }
+      catch(e){
+        console.log(e);
+        return{
+          success: false,
+          message: e.message
+        }
+      }
+    }
+    
+    getFlightListBasedOnAirline = async ({airlineId}) => {
+      const getFlightListBasedOnAirlineQuery = `select flight_number, status, source, destination, a.name as airline, time_of_flight  from 
+      flight as f inner join airline as a on f.airline_id = a.id where a.id = ${airlineId} and time_of_flight > current_timestamp();`
+
+      try{
+        const response = await connection.query(getFlightListBasedOnAirlineQuery);
+        const parsedResponse = parseRowDataPacket(response);
+
+        return{
+          success: true,
+          data: parsedResponse
+        }
+      }
+      catch(e){
+        console.log(e);
+        return{
+          success: false,
+          message: e.message
+        }
+      }
     }
 }
 
