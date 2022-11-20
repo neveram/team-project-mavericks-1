@@ -65,7 +65,7 @@ const ArrivalFlightTable = ()  => {
         onClose={handleSnackbarClose}
         message={message}
       />
-      <div>
+      <div style={{color: "white", backgroundColor: "#48C9B0"}}>
         <h1>Flight List</h1>
       </div>
       {loading ? 
