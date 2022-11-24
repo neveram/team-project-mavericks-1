@@ -12,7 +12,7 @@ class FlightService {
             status,
             source,
             destination,
-            time_of_flight,
+            timeOfFlight : time_of_flight
         } = flight;
     
         let flightUpdateQuery = `UPDATE flight SET
@@ -104,56 +104,6 @@ class FlightService {
         }
       }
     }
-
-    getFlightListBasedOnTimeAndStatus = async ({interval, status}) => {
-      let getArrivalFlightListBasedOnTimeQuery;
-      if(parseInt(interval) === 1){ 
-        getArrivalFlightListBasedOnTimeQuery = `select f.id, flight_number, status, source, destination, time_of_flight, a.name as airline 
-        from flight as f join airline as a
-        on f.airline_id = a.id
-        where time_of_flight >=current_timestamp()
-        and time_of_flight <= DATE_ADD(current_timestamp(),interval 1 hour)
-        and status = '${status}'
-          `
-      }
-      else if(parseInt(interval) === 2){
-        getArrivalFlightListBasedOnTimeQuery = `select f.id, flight_number, status, source, destination, time_of_flight, a.name as airline 
-        from flight as f join airline as a
-        on f.airline_id = a.id
-        where time_of_flight >=current_timestamp()
-        and time_of_flight <= DATE_ADD(current_timestamp(),interval 2 hour)
-        and time_of_flight >= DATE_ADD(current_timestamp(), interval 1 hour)
-        and status = '${status}'
-          `
-      }
-      else{
-        getArrivalFlightListBasedOnTimeQuery = `select f.id, flight_number, status, source, destination, time_of_flight, a.name as airline 
-        from flight as f join airline as a
-        on f.airline_id = a.id
-        where time_of_flight >=current_timestamp()
-        and time_of_flight <= DATE_ADD(current_timestamp(),interval 4 hour)
-        and time_of_flight >= DATE_ADD(current_timestamp(), interval 2 hour)
-        and status = '${status}'
-          `
-      }
-      try{
-        const response = await connection.query(getArrivalFlightListBasedOnTimeQuery);
-        const parsedResponse = parseRowDataPacket(response);
-
-        return{
-          success: true,
-          data: parsedResponse
-        }
-      }
-      catch(e){
-        console.log(e);
-        return{
-          success: false,
-          message: e.message
-        }
-      }
-    }
-
 }
 
 export default new FlightService();

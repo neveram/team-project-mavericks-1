@@ -29,15 +29,6 @@ class FlightController {
             sendInternalServerError(res);
         }
     }
-    getFlightListBasedOnTimeAndStatus = async(req, res) => {
-        const serviceResponse = await FlightService.getFlightListBasedOnTimeAndStatus(req.query);
-        if(serviceResponse.success == true){
-            sendCustomSuccess(res, serviceResponse.data);
-        }
-        else{
-            sendInternalServerError(res);
-        }
-    }
 }
 
 export default new FlightController();

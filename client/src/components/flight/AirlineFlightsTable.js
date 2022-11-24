@@ -2,6 +2,10 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
+import TextField from '@mui/material/TextField';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
@@ -11,7 +15,6 @@ import { checkEmptyFields } from '../../services/formValidationService';
 import { Paper } from '@mui/material';
 import { addFlightService, fetchFlightListForAirlineService } from '../../services/flightService';
 import FlightTable from './FlightTable';
-import { AuthContext } from '../../contexts/AuthContextProvider';
 
 const styles = {
   paperContainer: {
@@ -31,10 +34,6 @@ const ArilineFlightsTable = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
-
-  const authLoadingState = authContext[0];
-  const userDetails = authContext[3];
 
   const getFlightListForCurrentAirline = async () => {
     //Need to get airline id based on user login
@@ -73,7 +72,7 @@ const ArilineFlightsTable = () => {
         onClose={handleClose}
         message={message}
       />
-      {authLoadingState && loading ? (
+      {loading ? (
         <CircularProgress color="success" />
 
       ) : (
