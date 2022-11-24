@@ -44,10 +44,10 @@ const ArrivalFlightTable = ()  => {
 
   useEffect(() => {
     fetchFlightListData();
-  }, []);
+  }, [intervalState]);
 
   const fetchFlightListData = async () => {
-    const serviceResponse = await fetchFlightListService();
+    const serviceResponse = await fetchFlightListService({interval: intervalState, status: 'arrival'});
     if (serviceResponse.status === 200) {
       setFlightListState(serviceResponse.data.payload);
       setLoading(false);
@@ -87,7 +87,7 @@ const ArrivalFlightTable = ()  => {
                 >
                   <MenuItem value={1}>1 hour</MenuItem>
                   <MenuItem value={2}>2 hours</MenuItem>
-                  <MenuItem value={4}>3 hours</MenuItem>
+                  <MenuItem value={4}>4 hours</MenuItem>
                 </Select>
               </FormControl>
             </Box>

@@ -34,8 +34,9 @@ const theme = createTheme();
 
 const Login = () => {
     const val = useContext(AuthContext);
-    console.log(val);
-    const [_, setAuthState, userDetails, setUserDetails, setUserDetailsLocally ] = val;
+    const setAuthState = val[2];
+    const setUserDetailsLocally = val[5];
+    const userDetails = val[3];
 
     const navigate = useNavigate();
 
@@ -47,7 +48,6 @@ const Login = () => {
           password: data.get('password'),
         })
         if(response.status === 200){
-            console.log(response);
             setAuthState(true);
             setUserDetailsLocally({...userDetails, ...response.data.payload});
             setTimeout(()=>{
