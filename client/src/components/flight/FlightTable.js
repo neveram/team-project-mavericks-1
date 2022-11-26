@@ -1,4 +1,5 @@
 import React from 'react';
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -30,7 +31,9 @@ const FlightTable = ({flightListState}) => {
                   {flightListState.map((row) => (
                     <TableRow
                       key={row.flight_number}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      sx={{'&:nth-of-type(odd)': {
+                        backgroundColor: "#E8F8F5",
+                      }, '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell component="th" scope="row">
                         {row.source}
