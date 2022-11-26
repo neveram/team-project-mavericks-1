@@ -5,6 +5,6 @@ const router = express.Router();
 /// server/flight/new
 router.post('/new', TerminalController.addTerminal);
 router.get('/list', TerminalController.getTerminal);
-router.get('/list/airport', TerminalController.getTerminalBasedOnAirport);
+//router.get('/list/airport', TerminalController.getTerminalBasedOnAirport);
 
 export default router;

@@ -8,6 +8,9 @@ import ArilineFlightsTable from './components/flight/AirlineFlightsTable';
 import Login from './components/user/Login';
 import AuthContext from './contexts/AuthContextProvider';
 import PrivatePath from './components/PrivatePath';
+import AirportGates from './components/airport/AirportGates';
+import GateTable from './components/airport/GateTable';
+
 
 const Main = () => {
     const [user, setUser] = useState();
@@ -39,6 +42,12 @@ const Main = () => {
                                     </PrivatePath>
                                 }></Route>
                                 
+                                <Route path="/airport-gates"
+                                    element={<AirportGates/>}
+                                />
+                                <Route path="/gates"
+                                    element={<GateTable/>}
+                                    />
                                 {/* <Route path="project/:id"
                                     element={<PrivateRoute path="project/:id"
                                         element={<CreateProject />}

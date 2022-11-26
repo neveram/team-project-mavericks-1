@@ -9,8 +9,10 @@ import util from 'util';
 
 
 import testRouter from './routes/testRoutes.js';
-import flightRouter from './routes/flightRoutes.js'
-import terminalRouter from './routes/terminalRoutes.js'
+import flightRouter from './routes/flightRoutes.js';
+import terminalRouter from './routes/terminalRoutes.js';
+import gateRouter from './routes/gateRoutes.js'
+import bagCarouselRouter from './routes/bagCarouselRoutes.js';
 import userRouter from './routes/userRoutes.js';
 
 const port = 5001;
@@ -73,4 +75,6 @@ connection.query = util.promisify(connection.query).bind(connection);
 app.use('/test', testRouter);
 app.use('/flight', flightRouter);
 app.use('/terminal', terminalRouter);
+app.use('/gate', gateRouter);
+app.use('/baggage', bagCarouselRouter);
 app.use('/user', userRouter);

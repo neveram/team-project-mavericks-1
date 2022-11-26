@@ -13,7 +13,8 @@ const FlightTable = ({flightListState}) => {
     
     return(
         <Paper elevation={3}>
-            <TableContainer component={Paper}>
+          {flightListState.length > 0 ? (
+              <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
@@ -24,7 +25,6 @@ const FlightTable = ({flightListState}) => {
                     <TableCell align="right">Terminal</TableCell>
                     <TableCell align="right">Gate</TableCell>
                     <TableCell align="right">Baggage Claim</TableCell>
-
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -49,6 +49,10 @@ const FlightTable = ({flightListState}) => {
                 </TableBody>
               </Table>
             </TableContainer>
+          ): (
+            <h1 style={{padding: '25px'}}>No Flights</h1>
+          )}
+            
         </Paper>
     )
 

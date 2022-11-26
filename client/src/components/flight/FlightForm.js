@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import { useNavigate } from 'react-router-dom';
-import { CardHeader } from '@mui/material';
+import { Box, CardHeader, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { checkEmptyFields } from '../../services/formValidationService';
 import { Paper } from '@mui/material';
 import { addFlightService } from '../../services/flightService';
@@ -52,7 +52,7 @@ const FlightForm = () => {
     
     setFlightState({
         ...flightState,
-        timeOfFlight: e,
+        time_of_flight: e,
       });
   }
 
@@ -140,10 +140,26 @@ const FlightForm = () => {
                   onChange={handleFormChange}
                   value={flightState.destination}
                 />
+                <Box sx={{ minWidth: 120, maxWidth: 200 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Duration</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      name='status'
+                      id="demo-simple-select"
+                      value={flightState.status}
+                      label="Status"
+                      onChange={handleFormChange}
+                    >
+                      <MenuItem value={'arrival'}>Arrival</MenuItem>
+                      <MenuItem value={'departure'}>Departure</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                     label="Date&Time picker"
-                    value={flightState.timeOfFlight}
+                    value={flightState.time_of_flight}
                     onChange={handleDateChange}
                     renderInput={(params) => <TextField {...params} />}
                 />
