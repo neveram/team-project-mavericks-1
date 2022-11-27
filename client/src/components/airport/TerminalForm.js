@@ -11,12 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, CardHeader, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { checkEmptyFields } from '../../services/formValidationService';
 import { Paper } from '@mui/material';
-import { addFlightService, fetchFlightDetailsService } from '../../services/flightService';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Stack from '@mui/material/Stack';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 import { fetchTerminalDetailsService } from '../../services/terminalService';
 import { addTerminalService } from '../../services/terminalService';
@@ -45,7 +40,6 @@ const TerminalForm = () => {
 
   useEffect(() => {
     if(terminal_id != undefined){
-        console.log("within terminal",terminal_id);
       fetchTerminalDetails(terminal_id);
     }
   }, [])

@@ -6,6 +6,7 @@ import { fetchTerminalListService } from '../../services/terminalService';
 import GateTable from './GateTable';
 import { useNavigate } from 'react-router-dom';
 import InfoIcon from '@mui/icons-material/Info';
+import GateForm from './GateForm';
 
 function createData(terminal) {
     return { terminal};
@@ -36,6 +37,10 @@ const AirportGates = () => {
 
       const redirectToTerminalForm = (terminal_id) => {
         navigate(`/terminal/${terminal_id}`);
+      }
+
+      const redirectToGateForm = (terminal_id) => {
+        navigate(`/gate/${terminal_id}`);
       }
     
     
@@ -120,6 +125,15 @@ const AirportGates = () => {
               </Box>
               </div>
               <GateTable currentTerminal={selectedTerminal.terminal}/>
+              <Button
+              style={{ marginBottom: "15px",  marginTop: "15px"  }}
+              onClick={() => redirectToGateForm(selectedTerminal.id)}
+              variant={'contained'}
+              color={'primary'}
+              disabled={selectedTerminal.status=="inactive"}
+            >
+              Add Gate
+            </Button>
             </div>
           )
         }

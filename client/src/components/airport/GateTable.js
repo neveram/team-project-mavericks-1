@@ -5,9 +5,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Snackbar from '@mui/material/Snackbar';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import { fetchGateListService,fetchGateListForTerminalService } from '../../services/gateService';
+import { fetchGateListService,fetchGateListForTerminalService,addGateService } from '../../services/gateService';
+import { useNavigate } from 'react-router-dom';
 
 function createData(terminal,gateNumber,gateStatus) {
     return { terminal,gateNumber,gateStatus };
@@ -28,6 +30,7 @@ const GateTable = ({currentTerminal}) => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
 
   // const handleTerminalChange = (e) => {
@@ -48,9 +51,53 @@ const GateTable = ({currentTerminal}) => {
         setMessage('Some error occured while fetching data');
       }
     }
+
+    const handleGateDisable = async(gate) => {
+      const currentGate = {...gate, status : "disabled"} ;
+      const serviceResponse = await addGateService(currentGate);
+      if (serviceResponse.status === 200) {
+        setOpen(true);
+        setMessage('Operation Successfull');
+        gate.status="disabled";
+        setTimeout(() => { navigate('/airport-gates'); }, 2500)
+
+      }
+      else {
+        setOpen(true);
+        setMessage('Some Error Occured while disabling gate');
+      }
+    }
+
+    const handleGateEnable = async(gate) => {
+      const currentGate = {...gate, status : "available"} ;
+      const serviceResponse = await addGateService(currentGate);
+      if (serviceResponse.status === 200) {
+        setOpen(true);
+        setMessage('Operation Successfull');
+        gate.status="available";
+        setTimeout(() => { navigate('/airport-gates'); }, 2500)
+
+      }
+      else {
+        setOpen(true);
+        setMessage('Some Error Occured while enabling gate');
+      }
+    }
+    
+  const handleClose = () => {
+    setOpen(false);
+  }
     return (
+      <React.Fragment>
 <Paper elevation={3}>
-  { gateListState.filter((row)=>row.terminal == currentTerminal).length>0?(
+<Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={message}
+      />
+  { 
+    gateListState.filter((row)=>row.terminal == currentTerminal).length>0?(
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -71,12 +118,14 @@ const GateTable = ({currentTerminal}) => {
                                     style={{ marginBottom: "15px",  marginTop: "15px"  }}
                                     variant={'contained'}
                                     color={'secondary'}
+                                    onClick={()=> handleGateEnable(row)}
                                 >Enable
                                 </Button>):(<Button
                                     style={{ marginBottom: "15px",  marginTop: "15px"  }}
                                     variant={'contained'}
                                     color={'secondary'}
                                     disabled={row.status=="inuse"}
+                                    onClick={()=> handleGateDisable(row)}
                                 >Disable
                                 </Button>)}
                         </TableCell>
@@ -87,7 +136,7 @@ const GateTable = ({currentTerminal}) => {
             </TableContainer>
  ):((
   <h1 style={{padding: '25px'}}>No Gates</h1>
-))} </Paper>
+))} </Paper></React.Fragment>
     );
 };
 

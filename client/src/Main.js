@@ -11,6 +11,7 @@ import PrivatePath from './components/PrivatePath';
 import AirportGates from './components/airport/AirportGates';
 import GateTable from './components/airport/GateTable';
 import TerminalForm from './components/airport/TerminalForm';
+import GateForm from './components/airport/GateForm';
 
 
 const Main = () => {
@@ -42,6 +43,9 @@ const Main = () => {
                                 />
                             <Route path="/terminal/:id"
                                     element={<TerminalForm />}
+                                />
+                                <Route path="/gate/:id"
+                                    element={<GateForm />}
                                 />
                                 <Route path="/flight/update/:id"
                                     element={
