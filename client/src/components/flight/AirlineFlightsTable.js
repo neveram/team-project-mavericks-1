@@ -34,12 +34,12 @@ const ArilineFlightsTable = () => {
   const authContext = useContext(AuthContext);
 
   const authLoadingState = authContext[0];
-  const userDetails = authContext[3];
+  const {role_id} = authContext[3];
 
   const getFlightListForCurrentAirline = async () => {
     //Need to get airline id based on user login
     setLoading(true);
-    const serviceResponse = await fetchFlightListForAirlineService(1);
+    const serviceResponse = await fetchFlightListForAirlineService(role_id);
     if (serviceResponse.status === 200) {
         setFlightListState(serviceResponse.data.payload);
         setLoading(false);
@@ -87,7 +87,7 @@ const ArilineFlightsTable = () => {
             >
               Add Flight
             </Button>
-          <FlightTable flightListState={flightListState}/>
+          <FlightTable flightListState={flightListState} update={true}/>
           <Button style={{marginTop: '15px',  backgroundColor: "#21b6ae", margin: "15px"}}variant={'contained'} onClick={() => {navigate(-1)}}>Go Back</Button>
         </>
 

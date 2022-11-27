@@ -38,6 +38,15 @@ class FlightController {
             sendInternalServerError(res);
         }
     }
+    geFlightDetailsBasedOnId = async(req, res) => {
+        const serviceResponse = await FlightService.geFlightDetailsById(req.params);
+        if(serviceResponse.success == true){
+            sendCustomSuccess(res, serviceResponse.data);
+        }
+        else{
+            sendInternalServerError(res);
+        }
+    }
 }
 
 export default new FlightController();

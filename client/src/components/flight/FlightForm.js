@@ -11,12 +11,13 @@ import { useNavigate } from 'react-router-dom';
 import { Box, CardHeader, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { checkEmptyFields } from '../../services/formValidationService';
 import { Paper } from '@mui/material';
-import { addFlightService } from '../../services/flightService';
+import { addFlightService, fetchFlightDetailsService } from '../../services/flightService';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Stack from '@mui/material/Stack';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import { AuthContext } from '../../contexts/AuthContextProvider';
 const styles = {
   paperContainer: {
       backgroundImage: `url(${Image})`,
@@ -29,16 +30,35 @@ const styles = {
 const FlightForm = () => {
 
     // need to get from user context
-  
-  const [flightState, setFlightState] = useState({airlineId: 1});
+  const authContext = useContext(AuthContext);
+  const {id} = authContext[3];
+  const [flightState, setFlightState] = useState({airline_id: id});
   const [loading, setLoading] = useState(false);
   const params = useParams();
+  const {id: flightId} = params;
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+
   useEffect(() => {
+    if(flightId != undefined){
+      fetchFlightDetails(flightId);
+    }
   }, [])
+
+  const fetchFlightDetails = async (flightId) => {
+    setLoading(true);
+    const serviceResponse = await fetchFlightDetailsService(flightId);
+    if (serviceResponse.status === 200) {
+      setFlightState(serviceResponse.data.payload[0]);
+      setLoading(false);
+  }
+    else {
+      setOpen(true);
+      setMessage('Some Error Occured while fetching data');
+    }
+  }
 
   const handleFormChange = (e) => {
     
@@ -111,14 +131,14 @@ const FlightForm = () => {
                 <Stack spacing={3}>
                 <TextField
                   id="flight_number"
-                  name="flightNumber"
+                  name="flight_number"
                   label="Number"
                   fullWidth
                   autoComplete="Source"
                   variant="standard"
                   onChange={handleFormChange}
-                  value={flightState.flightNumber}
-                  backgroundColor="#21b6ae"
+                  value={flightState.flight_number}
+                  backgroundcolor="#21b6ae"
                 />
                 <TextField
                   id="source"
@@ -142,7 +162,7 @@ const FlightForm = () => {
                 />
                 <Box sx={{ minWidth: 120, maxWidth: 200 }}>
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Duration</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Status</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       name='status'

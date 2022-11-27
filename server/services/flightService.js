@@ -7,8 +7,8 @@ class FlightService {
         try{
         const {
             id: flight_id,
-            flightNumber: flight_number, 
-            airlineId: airline_id, 
+            flight_number, 
+            airline_id, 
             status,
             source,
             destination,
@@ -20,8 +20,8 @@ class FlightService {
             airline_id = '${airline_id}',
             status = '${status}',
             destination = '${destination}',
-            status = '${status}'
-            WHERE flgiht_id = '${flight_id}';
+            time_of_flight = '${time_of_flight}'
+            WHERE id = ${flight_id};
         `;
         let flightAddQuery = `INSERT INTO flight (
             id,
@@ -84,7 +84,7 @@ class FlightService {
     }
     
     getFlightListBasedOnAirline = async ({airlineId}) => {
-      const getFlightListBasedOnAirlineQuery = `select flight_number, status, source, destination, a.name as airline, time_of_flight  from 
+      const getFlightListBasedOnAirlineQuery = `select f.id as id, flight_number, status, source, destination, a.name as airline, time_of_flight  from 
       flight as f inner join airline as a on f.airline_id = a.id where a.id = ${airlineId} and time_of_flight > current_timestamp();`
 
       try{
@@ -108,7 +108,7 @@ class FlightService {
     getFlightListBasedOnTimeAndStatus = async ({interval, status}) => {
       let getArrivalFlightListBasedOnTimeQuery;
       if(parseInt(interval) === 1){ 
-        getArrivalFlightListBasedOnTimeQuery = `select f.id, flight_number, status, source, destination, time_of_flight, a.name as airline 
+        getArrivalFlightListBasedOnTimeQuery = `select f.id as id, flight_number, status, source, destination, time_of_flight, a.name as airline 
         from flight as f join airline as a
         on f.airline_id = a.id
         where time_of_flight >=current_timestamp()
@@ -117,7 +117,7 @@ class FlightService {
           `
       }
       else if(parseInt(interval) === 2){
-        getArrivalFlightListBasedOnTimeQuery = `select f.id, flight_number, status, source, destination, time_of_flight, a.name as airline 
+        getArrivalFlightListBasedOnTimeQuery = `select f.id as id, flight_number, status, source, destination, time_of_flight, a.name as airline 
         from flight as f join airline as a
         on f.airline_id = a.id
         where time_of_flight >=current_timestamp()
@@ -127,7 +127,7 @@ class FlightService {
           `
       }
       else{
-        getArrivalFlightListBasedOnTimeQuery = `select f.id, flight_number, status, source, destination, time_of_flight, a.name as airline 
+        getArrivalFlightListBasedOnTimeQuery = `select f.id as id, flight_number, status, source, destination, time_of_flight, a.name as airline 
         from flight as f join airline as a
         on f.airline_id = a.id
         where time_of_flight >=current_timestamp()
@@ -149,6 +149,26 @@ class FlightService {
         console.log(e);
         return{
           success: false,
+          message: e.message
+        }
+      }
+    }
+
+    geFlightDetailsById = async ({id: flightId}) => {
+      try{
+        const getFlightDetailsByIdQuery = `select * from flight where id = ${flightId};`
+        const response = await connection.query(getFlightDetailsByIdQuery);
+        const parsedResponse = parseRowDataPacket(response);
+
+        return{
+          success: true,
+          data: parsedResponse
+        }
+      }
+      catch(e){
+        console.log(e);
+        return {
+          success: false, 
           message: e.message
         }
       }

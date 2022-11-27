@@ -12,7 +12,8 @@ class UserService {
             fname,
             lname,
             role, 
-            password  
+            password,
+            role_id
           } = user;
           let getUserByIdQuery = `SELECT * FROM user WHERE id = ${id}`;
           const getLastInerstedIdQuery = `SELECT LAST_INSERT_ID();`;
@@ -41,7 +42,7 @@ class UserService {
             fname, 
             lname, 
             password, 
-            role) VALUES (${null}, '${email}', '${fname}', '${lname}', '${customerPassword}', '${role}')`;
+            role, role_id) VALUES (${null}, '${email}', '${fname}', '${lname}', '${customerPassword}', '${role}', '${role_id}')`;
       
             const response = await connection.query(sql_insert);
             getUserByIdQuery = `SELECT * FROM user WHERE id = ${response.insertId}`;

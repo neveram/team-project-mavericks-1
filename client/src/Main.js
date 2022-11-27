@@ -36,6 +36,13 @@ const Main = () => {
                                 <Route path="/flight/new"
                                     element={<FlightForm />}
                                 />
+                                <Route path="/flight/update/:id"
+                                    element={
+                                        <PrivatePath>
+                                            <FlightForm />
+                                        </PrivatePath>
+                                    }
+                                />
                                 <Route path="/airline-flights" element={
                                     <PrivatePath>
                                         <ArilineFlightsTable/>
