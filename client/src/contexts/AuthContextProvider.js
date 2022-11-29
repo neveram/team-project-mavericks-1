@@ -1,9 +1,11 @@
+import { CircularProgress } from '@mui/material';
 import React,{useState, createContext, useEffect} from 'react';
 
 //Creating a context using 'createContext'
 export const AuthContext = createContext(null);
 
 const AuthContextProvider = ({children}) =>{
+  console.log("Rendered Parent");
   //Boolean value that would simply indicate whether User is signed in or nor
   const [authState, setAuthState] = useState(false);
 
@@ -27,18 +29,34 @@ const AuthContextProvider = ({children}) =>{
     user = await JSON.parse(user);
     setAuthState(true);
     setAuthLoadingState(false);
+    setUserDetails(user);
   }
 
   useEffect(() => {
     fetUserDetailsLocally();
-  },[authState])
+  },[authState, authLoadingState])
+
+  // Passing all the state and state change functions to all the components down in the tree, for them to get access of THIS component's state 
 
   return(
-    // Passing all the state and state change functions to all the components down in the tree, for them to get access of THIS component's state 
-    <AuthContext.Provider value={[authLoadingState, authState, setAuthState, userDetails, setUserDetails, setUserDetailsLocally]}>
-      {children}
-    </AuthContext.Provider>
-  )
+    <div>
+    { authLoadingState  ? 
+      (
+        <CircularProgress/>
+
+      ) :
+      (
+        <AuthContext.Provider value={[authLoadingState, authState, setAuthState, userDetails, setUserDetails, setUserDetailsLocally]}>
+          {children}
+        </AuthContext.Provider>
+      )
+    }
+    </div>
+  );
 }
 
 export default AuthContextProvider;
+
+//<AuthContext.Provider value={[authLoadingState, authState, setAuthState, userDetails, setUserDetails, setUserDetailsLocally]}>
+      //   {children}
+      // </AuthContext.Provider>

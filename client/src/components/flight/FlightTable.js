@@ -14,9 +14,10 @@ import { useNavigate } from 'react-router-dom';
 
 const FlightTable = ({flightListState,update}) => {
   const navigate = useNavigate();
-  const handleUpdate = (id) => {
+  const handleUpdate = (row) => {
+    console.log(row)
     setTimeout(() => {
-      navigate(`/flight/update/${id}`);
+      navigate(`/flight/update/${row.id}`);
     }, 2000);
   }
 
@@ -56,7 +57,7 @@ const FlightTable = ({flightListState,update}) => {
                     <TableCell align="right">{"C"}</TableCell>
                     {update && (<TableCell align="right">
                       <Button
-                        onClick={(row) => {handleUpdate(row.id)}}
+                        onClick={(row) => {handleUpdate(row)}}
                       >
                         Update
                       </Button>

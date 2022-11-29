@@ -31,8 +31,8 @@ const FlightForm = () => {
 
     // need to get from user context
   const authContext = useContext(AuthContext);
-  const {id} = authContext[3];
-  const [flightState, setFlightState] = useState({airline_id: id});
+  const {role_id} = authContext[3];
+  const [flightState, setFlightState] = useState({airline_id: role_id});
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const {id: flightId} = params;
