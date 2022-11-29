@@ -3,7 +3,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FlightForm from './components/flight/FlightForm';
-import ArrivalFlightTable from './components/flight/ArrivalFlightsTable';
+import FlightTablePage from './components/flight/FlightTablePage';
 import AirlineFlightsTable from './components/flight/AirlineFlightsTable';
 import Login from './components/user/Login';
 import AuthContext from './contexts/AuthContextProvider';
@@ -12,6 +12,7 @@ import AirportGates from './components/airport/AirportGates';
 import GateTable from './components/airport/GateTable';
 import TerminalForm from './components/airport/TerminalForm';
 import GateForm from './components/airport/GateForm';
+import Dashboard from './components/Dashboard';
 
 
 const Main = () => {
@@ -20,11 +21,17 @@ const Main = () => {
             <AuthContext>
                 <Router>
                     <Routes>
+                        <Route path="/dashboard"
+                            element={<Dashboard />}
+                        /> 
                         <Route path="/login"
                             element={<Login />}
                         /> 
                         <Route path="/arrival-flights"
-                            element={<ArrivalFlightTable />}
+                            element={<FlightTablePage status={'arrival'}/>}
+                        />
+                        <Route path="/departure-flights"
+                            element={<FlightTablePage status={'departure'}/>}
                         />
                         <Route path="/flight/new"
                             element={<FlightForm />}
@@ -50,6 +57,8 @@ const Main = () => {
                                 <AirlineFlightsTable/>
                             </PrivatePath>
                         }></Route>
+
+
                         
                         <Route path="/airport-gates"
                             element={<AirportGates/>}

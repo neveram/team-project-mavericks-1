@@ -10,6 +10,8 @@ import Snackbar from '@mui/material/Snackbar';
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { fetchFlightListService } from '../../services/flightService';
 import FlightTable from './FlightTable';
+import {useNavigate} from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function createData(source, airline, flightNumber, time, terminal, gate, baggage) {
   return { source, airline, flightNumber, time, terminal, gate, baggage };
@@ -25,18 +27,23 @@ const rows = [
 
 
 
-const ArrivalFlightTable = ()  => {
+
+const FlightTablePage = ({status})  => {
 
   const [intervalState, setIntervalState] = useState(1);
   const [flightListState, setFlightListState] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSnackbarClose = () => {
     setOpen(false);
   }
 
+  const redirectToDashboard = () => {
+    navigate("/dashboard")
+  }
 
   const handleIntervalChange = (e) => {
     setIntervalState(e.target.value);
@@ -47,7 +54,7 @@ const ArrivalFlightTable = ()  => {
   }, [intervalState]);
 
   const fetchFlightListData = async () => {
-    const serviceResponse = await fetchFlightListService({interval: intervalState, status: 'arrival'});
+    const serviceResponse = await fetchFlightListService({interval: intervalState, status});
     if (serviceResponse.status === 200) {
       setFlightListState(serviceResponse.data.payload);
       setLoading(false);
@@ -92,16 +99,21 @@ const ArrivalFlightTable = ()  => {
               </FormControl>
             </Box>
             </div>
-            <FlightTable flightListState={flightListState}/>
+            <FlightTable flightListState={flightListState} update={false}/>
           </div>
         )
       }
-      
+      <br></br>
+      <div style={{justifyContent: 'center'}}>
+        <Button variant="contained" onClick={redirectToDashboard}>
+          Back to Dashboard
+        </Button>
+      </div>
     </React.Fragment>
   );
 }
 
-export default ArrivalFlightTable;
+export default FlightTablePage;
 
 
 {/* <Paper elevation={3}>
