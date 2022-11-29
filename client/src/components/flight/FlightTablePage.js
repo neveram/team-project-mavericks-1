@@ -1,30 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Snackbar from '@mui/material/Snackbar';
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { fetchFlightListService } from '../../services/flightService';
 import FlightTable from './FlightTable';
 import {useNavigate} from 'react-router-dom';
 import { Button } from '@mui/material';
-
-function createData(source, airline, flightNumber, time, terminal, gate, baggage) {
-  return { source, airline, flightNumber, time, terminal, gate, baggage };
-}
-
-const rows = [
-  createData('ABC', "Emirates", "A", "12:30", 2, 3, 4),
-  createData('EFG', "Quatar", "B", "12:32", 2, 3, 4),
-  createData('QWE', "Air India", "D", "11:30", 2, 3, 4),
-  createData('CDS', "Air India", "A", "10:30", 2, 3, 4),
-  createData('KAI', "KLM", "F", "12:30", 2, 3, 4),
-];
-
 
 
 

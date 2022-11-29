@@ -29,9 +29,10 @@ const FlightTable = ({flightListState,update}) => {
               <TableHead>
                 <TableRow>
                   <TableCell>From</TableCell>
+                  <TableCell>To</TableCell>
                   <TableCell align="right">Ariline</TableCell>
                   <TableCell align="right">Flight Number</TableCell>
-                  <TableCell align="right">Time of Arrival</TableCell>
+                  <TableCell align="right">Time of Flight</TableCell>
                   <TableCell align="right">Terminal</TableCell>
                   <TableCell align="right">Gate</TableCell>
                   <TableCell align="right">Baggage Claim</TableCell>
@@ -48,6 +49,9 @@ const FlightTable = ({flightListState,update}) => {
                   >
                     <TableCell component="th" scope="row">
                       {row.source}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.destination}
                     </TableCell>
                     <TableCell align="right">{row.airline}</TableCell>
                     <TableCell align="right">{row.flight_number}</TableCell>
