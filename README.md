@@ -1,3 +1,178 @@
+**CMPE202-48 : SOFTWARE SYSTEMS ENGINEERING**
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**GROUP PROJECT:**   **Airport Management System**                                                                                                                       
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+**TEAM NAME:** **Mavericks**
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**TEAM MEMBERS:**    
+
+ ADITYA KUMAR (016009968)
+
+ KAVAN SONI (016085966)
+
+ RUSHIL SHAH (015908789)
+
+ RUTUJA PALATKAR (015954718)
+ 
+ --------------------------------------------------------------------------------------------------------------------------------------------------------------
+              
+**SCRUM MEETING SCHEDULE:**
+
+Every Monday and Friday
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**XP Core Values Implemented:**
+
+- **Communication:** Maintained healthy communication throughout the project implementation and participated in weekly scrum calls to discuss progress.
+
+
+- **Simplicity:** Started with easy to understand functionality and scaled it up to meet project requirements
+
+
+- **Feedback:** Constructive feedback was provided by the team members on features that needed improvement. The feedback was very well received and were effectively implemented by the team members. Frequent reviews helped us solve bugs and make fixes easily.
+
+
+- **Courage:** We had the courage to incorporate any additional details/tasks that were required for the project progress.
+
+
+- **Respect:** Respected everyone’s input and implemented the solution that all agreed upon
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Tools and Languages:**
+
+- Frontend - ReactJS
+
+- Backend - NodeJS
+
+- Database – MySQL - AWS RDS
+
+- UI Icons – MaterialUI, React Bootstrap 
+
+- Postman - REST API client to test the developed APIs
+
+- Deployment - Amazon Web Services (AWS) - EC2 (With Load balancing and Auto scaling) 
+
+- Testing - JUnit MVC
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Design Decisions:**
+
+**Obserever**</br>
+             - To update multiple screens when there is change in single screen </br>
+          
+
+**Architecture-level:**
+
+- ReactJS as Frontend because of ease and flexibility
+- NodeJS as Backend 
+- AWS as the cloud provider for deployment
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Business- level:**
+
+
+**Passengers (Customer) Features:**
+
+- Sign up
+
+- Login
+
+- Retrieve flight arrivals and departures and Gate assignements 
+
+
+**Airport Employee Features:**
+
+- Sign up 
+
+- Login
+
+- Retrieve flight arrivals and departures and Gate assignements
+
+- Enable or disable one or more gates for maintenance
+
+- Assign Baggage Carousel number to Arriving flights
+
+**Airline Employee Features:**
+
+- Sign up
+
+- Login
+
+- Retrieve flight arrivals and departures and Gate assignements
+
+- Add or update the schedule of flights belonging to their airline relevant to that airport
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Database Design (Tables):**
+
+- user
+
+- flight
+
+- gate
+
+- airline
+
+- airport
+
+- carousal
+
+- terminal
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Summary of contributions (for each team member):**
+
+**Aditya Kumar:**
+
+**Kavan Soni:**
+
+**Rushil Shah:**
+
+**Rutuja Palatkar:**
+
+- UI wireframes
+- Class diagram for Flight 
+- Frontend UI
+- Gate assignment logic
+- Updated Readme
+- 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+**ARCHITECTURE DIAGRAM:**
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**COMPONENT DIAGRAM:**
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**DESIGN PATTERN CLASS DIAGRAM:**
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**DEPLOYMENT DIAGRAM:**
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 # team-project-mavericks-1
 Use Case:
 
