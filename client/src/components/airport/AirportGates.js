@@ -133,6 +133,8 @@ const AirportGates = () => {
             >
               Add Gate
             </Button>
+            <br></br>
+            <Button style={{marginTop: '15px',  backgroundColor: "#21b6ae", margin: "15px"}}variant={'contained'} onClick={() => {navigate(-1)}}>Go Back</Button>
             </div>
           )
         }

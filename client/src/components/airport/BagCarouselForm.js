@@ -12,8 +12,8 @@ import { Box, CardHeader, FormControl, InputLabel, MenuItem, Select } from '@mui
 import { checkEmptyFields } from '../../services/formValidationService';
 import { Paper } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import { AuthContext } from '../../contexts/AuthContextProvider';
-import { addGateService } from '../../services/gateService';
+import { addBagCarouselService } from '../../services/bagCarouselService';
+
 
 const styles = {
     paperContainer: {
@@ -24,42 +24,38 @@ const styles = {
   };
   
 
-const GateForm = () => {
-
-    const authContext = useContext(AuthContext);
-    const {id} = authContext[3];
+const BagCarouselForm = () => {
+  
    const [loading, setLoading] = useState(false);
-   const params = useParams();
-   const {id: terminal_id} = params;
-   const [gateState, setGateState] = useState({gate:"",status:"",terminal: terminal_id});
+   const [bagCarouselState, setBagCarouselState] = useState({status:""});
    const [open, setOpen] = useState(false);
    const [message, setMessage] = useState("");
    const navigate = useNavigate();
 
    const handleFormChange = (e) => {
     
-    setGateState({
-      ...gateState,
+    setBagCarouselState({
+      ...bagCarouselState,
       [e.target.name]: e.target.value
     });
   }
 
   const handleSubmit = async (e) => {
-    setGateState({
-      ...gateState,
+    setBagCarouselState({
+      ...bagCarouselState,
     });
 
-    if (checkEmptyFields(gateState) === true) {
-      const serviceResponse = await addGateService(gateState);
+    if (checkEmptyFields(bagCarouselState) === true) {
+      const serviceResponse = await addBagCarouselService(bagCarouselState);
       if (serviceResponse.status === 200) {
         setOpen(true);
         setMessage('Operation Successfull');
-        setTimeout(() => { navigate('/airport-gates'); }, 2500)
+        setTimeout(() => { navigate(-1); }, 2500)
 
       }
       else {
         setOpen(true);
-        setMessage('Error Occured :' + serviceResponse.data.message);
+        setMessage('Some Error Occured');
       }
     }
     else {
@@ -91,20 +87,19 @@ const GateForm = () => {
             <>
               <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: "#21b6ae"}}>
                 <Card variant="outlined" sx={{width: '80%'}}>
-                  <CardHeader title="GateDetails">
+                  <CardHeader title="Baggage Carousel Detail">
     
                   </CardHeader>
                   <CardContent>
                     <Stack spacing={3}>
                     <TextField
-                      id="gate_number"
-                      name="gate"
+                      id="carousel_number"
+                      name="carousel"
                       label="Number"
                       fullWidth
                       autoComplete="Source"
                       variant="standard"
                       onChange={handleFormChange}
-                      value={gateState.gate}
                       backgroundcolor="#21b6ae"
                     />
                     <Box sx={{ minWidth: 120, maxWidth: 200 }}>
@@ -114,7 +109,6 @@ const GateForm = () => {
                           labelId="demo-simple-select-label"
                           name='status'
                           id="demo-simple-select"
-                          value={gateState.status}
                           label="Status"
                           onChange={handleFormChange}
                         >
@@ -138,7 +132,8 @@ const GateForm = () => {
     
          </Paper>
         </React.Fragment>
+    
     );
 };
 
-export default GateForm;
+export default BagCarouselForm;

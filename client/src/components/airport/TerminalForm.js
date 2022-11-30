@@ -29,7 +29,7 @@ const TerminalForm = () => {
      // need to get from user context
   const authContext = useContext(AuthContext);
    const {id} = authContext[3];
-   const [terminalState, setTerminalState] = useState({airport: sessionStorage.getItem("airport")});
+   const [terminalState, setTerminalState] = useState({terminal:"",status:"",airport: sessionStorage.getItem("airport")});
   const [loading, setLoading] = useState(false);
   const params = useParams();
    const {id: terminal_id} = params;
@@ -80,7 +80,7 @@ const TerminalForm = () => {
       }
       else {
         setOpen(true);
-        setMessage('Some Error Occured');
+        setMessage('Error Occured :' + serviceResponse.data.message);
       }
     }
     else {

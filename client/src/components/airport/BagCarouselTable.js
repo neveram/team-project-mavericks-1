@@ -8,7 +8,6 @@ import TableRow from '@mui/material/TableRow';
 import Snackbar from '@mui/material/Snackbar';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import { fetchGateListService,fetchGateListForTerminalService,addGateService } from '../../services/gateService';
 import { useNavigate } from 'react-router-dom';
 import { fetchBagCarouselListService,addBagCarouselService } from '../../services/bagCarouselService';
 
@@ -80,10 +79,24 @@ const BagCarouselTable = () => {
   const handleClose = () => {
     setOpen(false);
   }
+
+  const redirectToBagCarouselForm = () => {
+    navigate(`/carousel/new`);
+  }
     return (
 
         <React.Fragment>
             <div><h3>Baggage Carousel List</h3></div>
+            <div>
+                      <Button
+                      style={{ marginBottom: "15px",  marginTop: "15px"  }}
+                      variant={'contained'}
+                      onClick={() => redirectToBagCarouselForm()}
+                      color={'primary'}
+                    >
+                      Add Baggage Carousel
+                    </Button>
+                    </div>
         <Paper elevation={3}>
         <Snackbar
                 open={open}
@@ -142,7 +155,11 @@ const BagCarouselTable = () => {
                     </TableContainer>
          ):((
           <h1 style={{padding: '25px'}}>No Baggage Carousels</h1>
-        ))} </Paper></React.Fragment>
+        ))
+        
+        } </Paper>
+        <Button style={{marginTop: '15px',  backgroundColor: "#21b6ae", margin: "15px"}}variant={'contained'} onClick={() => {navigate(-1)}}>Go Back</Button>
+        </React.Fragment>
             
     );
 };

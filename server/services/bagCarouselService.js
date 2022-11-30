@@ -46,6 +46,7 @@ class BagCarouselService {
                   
                 }
                 else{ //add
+                    console.log("query :",bagCarouselAddQuery,carousel_number)
                     const response = await connection.query(bagCarouselAddQuery);
                     let getBagCarouselByIdQuery = `SELECT * FROM carousel WHERE id = ${response.insertId};`;
                     const insertedObject = await connection.query(getBagCarouselByIdQuery);
