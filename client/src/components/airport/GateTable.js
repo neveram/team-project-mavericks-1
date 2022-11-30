@@ -93,6 +93,7 @@ const GateTable = ({currentTerminal}) => {
                   <TableRow>
                     <TableCell align="left">Gate</TableCell>
                     <TableCell align="center">Status</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

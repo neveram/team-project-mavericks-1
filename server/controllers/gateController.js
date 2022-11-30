@@ -1,5 +1,5 @@
 import GateService from "../services/gateService.js";
-import {sendCustomSuccess, sendInternalServerError} from './common.js';
+import {sendCustomSuccess, sendInternalServerError, sendCustomError} from './common.js';
 
 class GateController {
     addGate = async (req, res) => {
@@ -8,7 +8,13 @@ class GateController {
             sendCustomSuccess(res, serviceResponse.data);
         }
         else{
+            if(serviceResponse.message)
+            {
+                sendCustomError(res,500,serviceResponse.message);
+            }
+            else{
             sendInternalServerError(res);
+            }
         }
     }
     getGate = async (req, res) => {

@@ -21,10 +21,6 @@ const BagCarousel = () => {
     const handleSnackbarClose = () => {
       setOpen(false);
     }
-  
-    const redirectToDashboard = () => {
-      navigate("/dashboard")
-    }
 
     const redirectToCarouselList = () => {
       navigate("/carousel")
@@ -70,14 +66,13 @@ const BagCarousel = () => {
         }
         <br></br>
         <div style={{justifyContent: 'center'}}>
-          <Button variant="contained" style={{ marginRight:'10px'}} onClick={redirectToDashboard}>
-            Back to Dashboard
-          </Button>
 
           <Button variant="contained" onClick={redirectToCarouselList}>
             Add/Update Baggage Carousel
           </Button>
         </div>
+        <br></br>
+            <Button style={{marginTop: '15px',  backgroundColor: "#21b6ae", margin: "15px"}}variant={'contained'} onClick={() => {navigate(-1)}}>Go Back</Button>
       </React.Fragment>
     );
 };
