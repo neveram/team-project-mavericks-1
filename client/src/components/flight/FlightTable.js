@@ -61,7 +61,7 @@ const FlightTable = ({flightListState,update}) => {
                     <TableCell align="right">{"C"}</TableCell>
                     {update && (<TableCell align="right">
                       <Button
-                        onClick={(row) => {handleUpdate(row)}}
+                        onClick={() => {handleUpdate(row)}}
                       >
                         Update
                       </Button>

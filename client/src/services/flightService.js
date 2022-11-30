@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { BACKEND_PORT, BACKEND_URL } from "./constants"
 
 export const fetchFlightListService = async ({interval, status: flightStatus}) => {
@@ -25,6 +26,9 @@ export const fetchFlightListForAirlineService = async (airlineId) => {
 
 
 export const addFlightService = async (flight) => {
+
+  flight.time_of_flight = dayjs(flight.time_of_flight).format('MM/DD/YYYY HH:mm');
+  console.log("In Service", flight);
   const options = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

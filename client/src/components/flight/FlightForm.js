@@ -18,6 +18,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { AuthContext } from '../../contexts/AuthContextProvider';
+import { ConstructionOutlined } from '@mui/icons-material';
 const styles = {
   paperContainer: {
       backgroundImage: `url(${Image})`,
@@ -32,7 +33,7 @@ const FlightForm = () => {
     // need to get from user context
   const authContext = useContext(AuthContext);
   const {role_id} = authContext[3];
-  const [flightState, setFlightState] = useState({airline_id: role_id});
+  const [flightState, setFlightState] = useState({airline_id: role_id, bagCarousel: 1});
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const {id: flightId} = params;
@@ -69,7 +70,8 @@ const FlightForm = () => {
   }
 
   const handleDateChange = (e) => {
-    
+    console.log(e)
+    console.log(dayjs(e).format('DD/MM/YYYY HH:mm'))
     setFlightState({
         ...flightState,
         time_of_flight: e,
@@ -77,11 +79,15 @@ const FlightForm = () => {
   }
 
   const handleSubmit = async (e) => {
-    setFlightState({
-      ...flightState,
-      time_of_flight: dayjs(flightState.time_of_flight).format('DD/MM/YYYY hh:ss'),
-    });
 
+    const finalTime = dayjs(flightState.time_of_flight).format('MM/DD/YYYY HH:mm');
+    console.log("Final Time", finalTime);
+    // setFlightState({
+    //   ...flightState,
+    //   time_of_flight: finalTime,
+    // });
+
+    console.log(flightState);
     if (checkEmptyFields(flightState) === true) {
       const serviceResponse = await addFlightService(flightState);
       if (serviceResponse.status === 200) {
@@ -182,6 +188,7 @@ const FlightForm = () => {
                     value={flightState.time_of_flight}
                     onChange={handleDateChange}
                     renderInput={(params) => <TextField {...params} />}
+                    ampm={false}
                 />
                 </LocalizationProvider>
                 </Stack>

@@ -5,6 +5,7 @@ import cors from  'cors';
 import bodyParser from 'body-parser';
 import mysql from 'mysql';
 import util from 'util';
+import cron from 'node-cron';
 // const { createLogger, format, transports } = require('winston');
 
 
@@ -42,21 +43,6 @@ export const connection = mysql.createConnection({
 });
 
 
-// export const logger = winston.createLogger({
-//   transports:
-//       new transports.File({
-//       filename: 'logs/server.log',
-//       format:format.combine(
-//           format.timestamp({format: 'MMM-DD-YYYY HH:mm:ss'}),
-//           format.align(),
-//           format.printf(info => `${info.level}: ${[info.timestamp]}: ${info.message}`),
-//       )}),
-//   });
-  
-// export const db = makeDb();
-// const no = db.connect(connection).then(() => {console.log('connected as id ' + connection.threadId);})
-//   .catch(e=>{console.error('error connecting: ' + err.stack);});
-
 
  
 connection.connect((err) =>{
@@ -78,3 +64,12 @@ app.use('/terminal', terminalRouter);
 app.use('/gate', gateRouter);
 app.use('/baggage', bagCarouselRouter);
 app.use('/user', userRouter);
+
+
+
+// Cron Jobs
+
+cron.schedule("*/10 * * * * *", function() {
+  console.log("running a task every 10 second");
+  //everything related to cron job goes here...
+});
