@@ -11,18 +11,7 @@ import Button from '@mui/material/Button';
 import { fetchGateListService,fetchGateListForTerminalService,addGateService } from '../../services/gateService';
 import { useNavigate } from 'react-router-dom';
 
-function createData(terminal,gateNumber,gateStatus) {
-    return { terminal,gateNumber,gateStatus };
-  }
-  
-  // const rows = [
-  //   createData(1,'1A','Enabled'),
-  //   createData(1,'1B','Disabled'),
-  //   createData(2,'2A','Disabled'),
-  //   createData(2,'2B','Enabled'),
-  //   createData(3,'3A','Disabled'),
-  //   createData(3,'3B','Enabled'),
-  // ];
+
 const GateTable = ({currentTerminal}) => {
 
   // const [selectedTerminal, setSelectedTerminal] = useState(1);
@@ -104,6 +93,7 @@ const GateTable = ({currentTerminal}) => {
                   <TableRow>
                     <TableCell align="left">Gate</TableCell>
                     <TableCell align="center">Status</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

@@ -30,7 +30,7 @@ const Dashboard = ( ) => {
         navigate('/airline-flights')
     }
     const redirectToAirportService = () => {
-        navigate('/airport-gates')
+        navigate('/airport-dashboard')
     }
 
     return(

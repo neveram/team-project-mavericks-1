@@ -14,6 +14,9 @@ import TerminalForm from './components/airport/TerminalForm';
 import GateForm from './components/airport/GateForm';
 import Dashboard from './components/Dashboard';
 import BagCarousel from './components/airport/BagCarousel';
+import BagCarouselTable from './components/airport/BagCarouselTable';
+import BagCarouselForm from './components/airport/BagCarouselForm';
+import AirportDashboard from './components/airport/AirportDashboard';
 
 
 const Main = () => {
@@ -24,20 +27,20 @@ const Main = () => {
                     <Routes>
                         <Route path="/dashboard"
                             element={<Dashboard />}
-                        /> 
+                        />
                         <Route path="/login"
                             element={<Login />}
-                        /> 
+                        />
                         <Route path="/arrival-flights"
-                            element={<FlightTablePage status={'arrival'}/>}
+                            element={<FlightTablePage status={'arrival'} />}
                         />
                         <Route path="/departure-flights"
-                            element={<FlightTablePage status={'departure'}/>}
+                            element={<FlightTablePage status={'departure'} />}
                         />
                         <Route path="/flight/new"
                             element={<FlightForm />}
                         />
-                            <Route path="/terminal/new"
+                        <Route path="/terminal/new"
                             element={<TerminalForm />}
                         />
                         <Route path="/terminal/:id"
@@ -55,24 +58,34 @@ const Main = () => {
                         />
                         <Route path="/airline-flights" element={
                             <PrivatePath>
-                                <AirlineFlightsTable/>
+                                <AirlineFlightsTable />
                             </PrivatePath>
                         }></Route>
 
-                        <Route path="/airport-baggages" 
-                        element={<BagCarousel/>}
+                        <Route path="/airport-baggages"
+                            element={<BagCarousel />}
                         />
-                        
+
+                        <Route path="/carousel"
+                            element={<BagCarouselTable />}
+                        />
+                        <Route path="/carousel/new"
+                            element={<BagCarouselForm />}
+                        />
+                        <Route path="/airport-dashboard"
+                            element={
+                                <PrivatePath>
+                                    <AirportDashboard />
+                                </PrivatePath>
+                            }></Route>
                         <Route path="/airport-gates"
                             element={
-                            <PrivatePath>
-                                <AirportGates/>
-                            </PrivatePath>
-                        }></Route>
+                                <AirportGates />
+                            }></Route>
                         <Route path="/gates"
-                            element={<GateTable/>}
-                            />
-                        
+                            element={<GateTable />}
+                        />
+
                     </Routes>
                 </Router>
             </AuthContext>

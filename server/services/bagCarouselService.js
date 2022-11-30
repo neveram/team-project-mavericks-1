@@ -19,6 +19,21 @@ class BagCarouselService {
                 status) VALUES ('${carousel_number}', '${status}' )
             `;
             if(carousel_id){ //update
+              if(status== "available")
+              {
+                let BagCarouselValidationQuery = `SELECT * from flight Where status = 'arrival' 
+                and bagCarousel = ${carousel_id} and 
+                time_of_flight >= CONVERT_TZ((current_timestamp() - INTERVAL '60' MINUTE), 'GMT', 'US/Pacific');`
+                const result = await connection.query(BagCarouselValidationQuery);
+                const parsedResult = parseRowDataPacket(result);
+                if(parsedResult.length>0){
+                  return {
+                    success: false,
+                    message: "Carousel still in use. Please try after some time"
+                    };
+                }
+              }
+              
                 let getBagCarouselByIdQuery = `SELECT * FROM carousel WHERE id = ${carousel_id};`;
                     const response = await connection.query(bagCarouselUpdateQuery);
                     const insertedObject = await connection.query(getBagCarouselByIdQuery);
@@ -28,8 +43,10 @@ class BagCarouselService {
                     success: true,
                     data: result[0]
                     };
+                  
                 }
                 else{ //add
+                    console.log("query :",bagCarouselAddQuery,carousel_number)
                     const response = await connection.query(bagCarouselAddQuery);
                     let getBagCarouselByIdQuery = `SELECT * FROM carousel WHERE id = ${response.insertId};`;
                     const insertedObject = await connection.query(getBagCarouselByIdQuery);
