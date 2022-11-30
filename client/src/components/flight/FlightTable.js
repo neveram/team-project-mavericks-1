@@ -12,7 +12,7 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
-const FlightTable = ({flightListState,update}) => {
+const FlightTable = ({flightListState,update,bagAssign}) => {
   const navigate = useNavigate();
   const handleUpdate = (row) => {
     setTimeout(() => {
@@ -35,7 +35,8 @@ const FlightTable = ({flightListState,update}) => {
                   <TableCell align="right">Terminal</TableCell>
                   <TableCell align="right">Gate</TableCell>
                   <TableCell align="right">Baggage Claim</TableCell>
-                  {update && (<TableCell align="right">Action</TableCell>)}
+                  {update | bagAssign && (<TableCell align="right">Action</TableCell>)}
+                  
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -57,12 +58,19 @@ const FlightTable = ({flightListState,update}) => {
                     <TableCell align="right">{formatDate(new Date(row.time_of_flight))}</TableCell>
                     <TableCell align="right">{"A"}</TableCell>
                     <TableCell align="right">{"B"}</TableCell>
-                    <TableCell align="right">{"C"}</TableCell>
+                    <TableCell align="right">{row.bagCarousel? row.bagCarousel: "Not Assigned"}</TableCell>
                     {update && (<TableCell align="right">
                       <Button
                         onClick={() => {handleUpdate(row)}}
                       >
                         Update
+                      </Button>
+                    </TableCell>)}
+                    {bagAssign && (<TableCell align="right">
+                      <Button
+                        onClick={() => {handleUpdate(row)}}
+                      >
+                        Assign Baggage
                       </Button>
                     </TableCell>)}
                   </TableRow>

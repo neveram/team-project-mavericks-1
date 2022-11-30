@@ -13,6 +13,7 @@ import GateTable from './components/airport/GateTable';
 import TerminalForm from './components/airport/TerminalForm';
 import GateForm from './components/airport/GateForm';
 import Dashboard from './components/Dashboard';
+import BagCarousel from './components/airport/BagCarousel';
 
 
 const Main = () => {
@@ -58,7 +59,9 @@ const Main = () => {
                             </PrivatePath>
                         }></Route>
 
-
+                        <Route path="/airport-baggages" 
+                        element={<BagCarousel/>}
+                        />
                         
                         <Route path="/airport-gates"
                             element={

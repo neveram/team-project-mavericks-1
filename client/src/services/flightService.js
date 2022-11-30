@@ -51,3 +51,14 @@ export const fetchFlightDetailsService = async(flightId) => {
   const data = await response.json();
   return {status, data};
 }
+
+export const fetchArrivalFlightListBasedOnBagCarouselService = async () => {
+  const options = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }
+    const response = await fetch(`${BACKEND_URL}:${BACKEND_PORT}/flight/list/arrival/nobag`, options);
+    const status = response.status;
+    const data = await response.json();
+    return { status, data };
+}

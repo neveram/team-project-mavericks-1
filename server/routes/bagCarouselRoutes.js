@@ -5,7 +5,7 @@ const router = express.Router();
 /// server/flight/new
 router.post('/new', BagCarouselController.addBagCarousel);
 router.get('/list', BagCarouselController.getBagCarousel);
-// router.get('/list/terminal', BagController.getBagBasedOnTerminal);
-//router.get('/list/airport', TerminalController.getTerminalBasedOnAirport);
+router.get('/list/available', BagCarouselController.getAvailableBagCarousel);
+router.get('/list/assigned', BagCarouselController.getAssignedBagCarousel);
 
 export default router;

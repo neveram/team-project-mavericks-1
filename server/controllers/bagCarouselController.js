@@ -20,15 +20,27 @@ class BagCarouselController {
             sendInternalServerError(res);
         }
     }
-    // getBagCarouselBasedOnTerminal = async(req, res) => {
-    //     const serviceResponse = await GateService.getBagCarouselBasedOnTerminal(req.query);
-    //     if(serviceResponse.success == true){
-    //         sendCustomSuccess(res, serviceResponse.data);
-    //     }
-    //     else{
-    //         sendInternalServerError(res);
-    //     }
-    // }
+
+    getAvailableBagCarousel = async (req, res) => {
+        const serviceResponse = await BagCarouselService.getAvailableBagCarouselList(req.body);
+        if(serviceResponse.success ===  true){
+            sendCustomSuccess(res, serviceResponse.data);
+        }
+        else{
+            sendInternalServerError(res);
+        }
+    }
+
+    getAssignedBagCarousel = async (req, res) => {
+        const serviceResponse = await BagCarouselService.getAssignedBagCarouselList(req.body);
+        if(serviceResponse.success ===  true){
+            sendCustomSuccess(res, serviceResponse.data);
+        }
+        else{
+            sendInternalServerError(res);
+        }
+    }
+
 }
 
 export default new BagCarouselController();

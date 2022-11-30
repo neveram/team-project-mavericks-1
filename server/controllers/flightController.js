@@ -47,6 +47,16 @@ class FlightController {
             sendInternalServerError(res);
         }
     }
+
+    getArrivalFlightListBasedOnBaggageCarousel = async(req, res) => {
+        const serviceResponse = await FlightService.getArrivalFlightListBasedOnBaggageCarousel(req.body);
+        if(serviceResponse.success == true){
+            sendCustomSuccess(res, serviceResponse.data);
+        }
+        else{
+            sendInternalServerError(res);
+        }
+    }
 }
 
 export default new FlightController();

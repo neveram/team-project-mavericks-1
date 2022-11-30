@@ -19,6 +19,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 import { ConstructionOutlined } from '@mui/icons-material';
+import { addBagCarouselService, fetchAvailableBagCarouselListService } from '../../services/bagCarouselService';
+
 const styles = {
   paperContainer: {
       backgroundImage: `url(${Image})`,
@@ -32,8 +34,10 @@ const FlightForm = () => {
 
     // need to get from user context
   const authContext = useContext(AuthContext);
-  const {role_id} = authContext[3];
+  const {role_id,role} = authContext[3];
   const [flightState, setFlightState] = useState({airline_id: role_id, bagCarousel: 1});
+  const [selectedCarousel, setSelectedCarousel] = useState(1);
+  const[bagCarousel, setBagCarouselState] = useState([]);
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const {id: flightId} = params;
@@ -45,9 +49,25 @@ const FlightForm = () => {
   useEffect(() => {
     if(flightId != undefined){
       fetchFlightDetails(flightId);
+      if(role == "airport"){
+        fetchAvailableBaggageCarouselList();
+      }
     }
   }, [])
 
+  const fetchAvailableBaggageCarouselList = async () => {
+    setLoading(true);
+    const serviceResponse = await fetchAvailableBagCarouselListService();
+    if (serviceResponse.status === 200) {
+      setBagCarouselState(serviceResponse.data.payload);
+      // setSelectedCarousel(serviceResponse.data.payload[0]);
+      setLoading(false);
+  }
+    else {
+      setOpen(true);
+      setMessage('Some Error Occured while fetching baggage list data');
+    }
+  }
   const fetchFlightDetails = async (flightId) => {
     setLoading(true);
     const serviceResponse = await fetchFlightDetailsService(flightId);
@@ -75,7 +95,11 @@ const FlightForm = () => {
         time_of_flight: e,
       });
   }
-
+  const handleCarouselChange = (e) =>{
+    setFlightState({...flightState,
+        bagCarousel:e.target.value.id});
+        setSelectedCarousel(e.target.value);
+  }
   const handleSubmit = async (e) => {
 
     const finalTime = dayjs(flightState.time_of_flight).format('MM/DD/YYYY HH:mm');
@@ -87,19 +111,34 @@ const FlightForm = () => {
     if (checkEmptyFields(flightState) === true) {
       const serviceResponse = await addFlightService(flightState);
       if (serviceResponse.status === 200) {
+        if(role == "airport"){
+          const bagStatusChangeServiceResponse = await addBagCarouselService({...selectedCarousel, status:"inuse"});
+          if(bagStatusChangeServiceResponse.status === 200){
+            setOpen(true);
+            setMessage('Operation Successfull');
+            setTimeout(() => { navigate('/airport-baggages'); }, 2500)            
+          }
+            else {
+              setOpen(true);
+              setMessage('Some Error Occured while updating Carousel state');
+            }
+        }
+        else{
         setOpen(true);
         setMessage('Operation Successfull');
         setTimeout(() => { navigate('/airline-flights'); }, 2500)
+        }
 
       }
       else {
         setOpen(true);
-        setMessage('Some Error Occured');
+        setMessage('Some Error Occured while updating flight');
       }
     }
     else {
       setOpen(true);
       setMessage('Please Fill out all the fields');
+      console.log("flg",flightState);
     }
 
 
@@ -141,6 +180,7 @@ const FlightForm = () => {
                   onChange={handleFormChange}
                   value={flightState.flight_number}
                   backgroundcolor="#21b6ae"
+                  disabled = {role=="airport"}
                 />
                 <TextField
                   id="source"
@@ -151,6 +191,7 @@ const FlightForm = () => {
                   variant="standard"
                   onChange={handleFormChange}
                   value={flightState.source}
+                  disabled = {role=="airport"}
                 />
                 <TextField
                   id="destination"
@@ -161,8 +202,9 @@ const FlightForm = () => {
                   variant="standard"
                   onChange={handleFormChange}
                   value={flightState.destination}
+                  disabled = {role=="airport"}
                 />
-                <Box sx={{ minWidth: 120, maxWidth: 200 }}>
+               {role != "airport" ?(<Box sx={{ minWidth: 120, maxWidth: 200 }}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Status</InputLabel>
                     <Select
@@ -177,12 +219,32 @@ const FlightForm = () => {
                       <MenuItem value={'departure'}>Departure</MenuItem>
                     </Select>
                   </FormControl>
-                </Box>
+                </Box> ):(<Box sx={{ minWidth: 120, maxWidth: 200 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Baggage Carousel</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      name='bagCarousel'
+                      id="demo-simple-select"
+                      value={selectedCarousel}
+                      label="bagCarousel"
+                      onChange={handleCarouselChange}
+                    >
+                      {bagCarousel.map((row)=>(
+                    <MenuItem key = {row.id} value={row}>Carousel {row.carousel_number}</MenuItem>
+                      ))
+
+                      }
+
+                    </Select>
+                  </FormControl>
+                </Box>) }
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                     label="Date&Time picker"
                     value={flightState.time_of_flight}
                     onChange={handleDateChange}
+                    disabled = {role == "airport"}
                     renderInput={(params) => <TextField {...params} />}
                     ampm={false}
                 />
@@ -190,7 +252,9 @@ const FlightForm = () => {
                 </Stack>
               </CardContent>
               <CardActions style={{justifyContent:'center'}}>
+              {role !="airport" ? (<Button style={{backgroundColor: "#21b6ae"}} variant={'contained'} onClick={handleSubmit}>Submit</Button>):(
                 <Button style={{backgroundColor: "#21b6ae"}} variant={'contained'} onClick={handleSubmit}>Submit</Button>
+              )}
               </CardActions>
             </Card>
           </div>
