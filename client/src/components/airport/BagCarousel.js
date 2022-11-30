@@ -25,6 +25,10 @@ const BagCarousel = () => {
     const redirectToDashboard = () => {
       navigate("/dashboard")
     }
+
+    const redirectToCarouselList = () => {
+      navigate("/carousel")
+    }
   
     useEffect(() => {
       fetchFlightListData();
@@ -66,8 +70,12 @@ const BagCarousel = () => {
         }
         <br></br>
         <div style={{justifyContent: 'center'}}>
-          <Button variant="contained" onClick={redirectToDashboard}>
+          <Button variant="contained" style={{ marginRight:'10px'}} onClick={redirectToDashboard}>
             Back to Dashboard
+          </Button>
+
+          <Button variant="contained" onClick={redirectToCarouselList}>
+            Add/Update Baggage Carousel
           </Button>
         </div>
       </React.Fragment>

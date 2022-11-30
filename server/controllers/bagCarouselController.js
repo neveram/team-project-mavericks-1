@@ -1,5 +1,5 @@
 import BagCarouselService from "../services/bagCarouselService.js";
-import {sendCustomSuccess, sendInternalServerError} from './common.js';
+import {sendCustomError, sendCustomSuccess, sendInternalServerError} from './common.js';
 
 class BagCarouselController {
     addBagCarousel = async (req, res) => {
@@ -8,7 +8,13 @@ class BagCarouselController {
             sendCustomSuccess(res, serviceResponse.data);
         }
         else{
+            if(serviceResponse.message)
+            {
+                sendCustomError(res,500,serviceResponse.message);
+            }
+            else{
             sendInternalServerError(res);
+            }
         }
     }
     getBagCarousel = async (req, res) => {
