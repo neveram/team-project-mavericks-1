@@ -13,6 +13,7 @@ class FlightService {
             source,
             destination,
             time_of_flight,
+            bagCarousel,
         } = flight;
     
         let flightUpdateQuery = `UPDATE flight SET
@@ -20,7 +21,8 @@ class FlightService {
             airline_id = '${airline_id}',
             status = '${status}',
             destination = '${destination}',
-            time_of_flight = '${time_of_flight}'
+            time_of_flight = '${time_of_flight}',
+            bagCarousel = '${bagCarousel}'
             WHERE id = ${flight_id};
         `;
         let flightAddQuery = `INSERT INTO flight (
@@ -158,6 +160,28 @@ class FlightService {
       try{
         const getFlightDetailsByIdQuery = `select * from flight where id = ${flightId};`
         const response = await connection.query(getFlightDetailsByIdQuery);
+        const parsedResponse = parseRowDataPacket(response);
+
+        return{
+          success: true,
+          data: parsedResponse
+        }
+      }
+      catch(e){
+        console.log(e);
+        return {
+          success: false, 
+          message: e.message
+        }
+      }
+    }
+
+    getArrivalFlightListBasedOnBaggageCarousel = async () => {
+      try{
+        const getArrivalFlightListBasedOnBaggageCarouselQuery = `select f.id as id, flight_number, status, source, destination, time_of_flight, a.name as airline 
+        from flight as f join airline as a
+        on f.airline_id = a.id where status = 'arrival' and f.bagCarousel is null;`
+        const response = await connection.query(getArrivalFlightListBasedOnBaggageCarouselQuery);
         const parsedResponse = parseRowDataPacket(response);
 
         return{
