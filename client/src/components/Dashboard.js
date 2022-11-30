@@ -30,6 +30,7 @@ const Dashboard = ( ) => {
         navigate('/airline-flights')
     }
     const redirectToAirportService = () => {
+        navigate('/airport-gates')
     }
 
     return(
@@ -81,7 +82,7 @@ const Dashboard = ( ) => {
                     <Divider></Divider>
                     <br></br>
                     <div style={{justifyContent: 'center'}}>
-                        <Button variant="contained" onClick={redirectToArrivalFlights}>
+                        <Button variant="contained" onClick={redirectToAirportService}>
                             Go to Airport Handling Service
                         </Button>
                     </div>

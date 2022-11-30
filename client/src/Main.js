@@ -61,8 +61,11 @@ const Main = () => {
 
                         
                         <Route path="/airport-gates"
-                            element={<AirportGates/>}
-                        />
+                            element={
+                            <PrivatePath>
+                                <AirportGates/>
+                            </PrivatePath>
+                        }></Route>
                         <Route path="/gates"
                             element={<GateTable/>}
                             />
