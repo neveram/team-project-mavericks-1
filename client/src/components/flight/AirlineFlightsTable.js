@@ -88,7 +88,7 @@ const ArilineFlightsTable = () => {
               Add Flight
             </Button>
           <FlightTable flightListState={flightListState} update={true}/>
-          <Button style={{marginTop: '15px',  backgroundColor: "#21b6ae", margin: "15px"}}variant={'contained'} onClick={() => {navigate(-1)}}>Go Back</Button>
+          <Button style={{marginTop: '15px',  backgroundColor: "#21b6ae", margin: "15px"}}variant={'contained'} onClick={() => {navigate('/dashboard')}}>Go Back</Button>
         </>
 
 

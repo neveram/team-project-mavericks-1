@@ -5,7 +5,6 @@ import React,{useState, createContext, useEffect} from 'react';
 export const AuthContext = createContext(null);
 
 const AuthContextProvider = ({children}) =>{
-  console.log("Rendered Parent");
   //Boolean value that would simply indicate whether User is signed in or nor
   const [authState, setAuthState] = useState(false);
 

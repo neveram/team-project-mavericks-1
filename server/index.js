@@ -69,7 +69,7 @@ app.use('/user', userRouter);
 
 // Cron Jobs
 
-cron.schedule("*/10 * * * * *", function() {
-  console.log("running a task every 10 second");
-  //everything related to cron job goes here...
-});
+// cron.schedule("*/10 * * * * *", function() {
+//   console.log("running a task every 10 second");
+//   //everything related to cron job goes here...
+// });

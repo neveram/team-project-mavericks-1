@@ -27,8 +27,9 @@ export const fetchFlightListForAirlineService = async (airlineId) => {
 
 export const addFlightService = async (flight) => {
 
-  flight.time_of_flight = dayjs(flight.time_of_flight).format('MM/DD/YYYY HH:mm');
-  console.log("In Service", flight);
+  // Setting correct time format
+  // It is not a grood practice to do this in service, but don't really have much of an option
+  flight.time_of_flight = dayjs(flight.time_of_flight).format('YYYY-MM-DD HH:mm');
   const options = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

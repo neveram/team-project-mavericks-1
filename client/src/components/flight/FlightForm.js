@@ -70,8 +70,6 @@ const FlightForm = () => {
   }
 
   const handleDateChange = (e) => {
-    console.log(e)
-    console.log(dayjs(e).format('DD/MM/YYYY HH:mm'))
     setFlightState({
         ...flightState,
         time_of_flight: e,
@@ -81,13 +79,11 @@ const FlightForm = () => {
   const handleSubmit = async (e) => {
 
     const finalTime = dayjs(flightState.time_of_flight).format('MM/DD/YYYY HH:mm');
-    console.log("Final Time", finalTime);
-    // setFlightState({
-    //   ...flightState,
-    //   time_of_flight: finalTime,
-    // });
+    setFlightState({
+      ...flightState,
+      time_of_flight: finalTime,
+    });
 
-    console.log(flightState);
     if (checkEmptyFields(flightState) === true) {
       const serviceResponse = await addFlightService(flightState);
       if (serviceResponse.status === 200) {

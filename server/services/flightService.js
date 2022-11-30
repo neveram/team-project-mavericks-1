@@ -85,7 +85,7 @@ class FlightService {
     
     getFlightListBasedOnAirline = async ({airlineId}) => {
       const getFlightListBasedOnAirlineQuery = `select f.id as id, flight_number, status, source, destination, a.name as airline, time_of_flight  from 
-      flight as f inner join airline as a on f.airline_id = a.id where a.id = ${airlineId} and time_of_flight > current_timestamp();`
+      flight as f inner join airline as a on f.airline_id = a.id where a.id = ${airlineId} and time_of_flight > CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific');`
 
       try{
         const response = await connection.query(getFlightListBasedOnAirlineQuery);
@@ -111,8 +111,8 @@ class FlightService {
         getArrivalFlightListBasedOnTimeQuery = `select f.id as id, flight_number, status, source, destination, time_of_flight, a.name as airline 
         from flight as f join airline as a
         on f.airline_id = a.id
-        where time_of_flight >=current_timestamp()
-        and time_of_flight <= DATE_ADD(current_timestamp(),interval 1 hour)
+        where time_of_flight >= CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')
+        and time_of_flight <= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 1 hour)
         and status = '${status}'
           `
       }
@@ -120,9 +120,9 @@ class FlightService {
         getArrivalFlightListBasedOnTimeQuery = `select f.id as id, flight_number, status, source, destination, time_of_flight, a.name as airline 
         from flight as f join airline as a
         on f.airline_id = a.id
-        where time_of_flight >=current_timestamp()
-        and time_of_flight <= DATE_ADD(current_timestamp(),interval 2 hour)
-        and time_of_flight >= DATE_ADD(current_timestamp(), interval 1 hour)
+        where time_of_flight >= CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')
+        and time_of_flight <= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 2 hour)
+        and time_of_flight >= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 1 hour)
         and status = '${status}'
           `
       }
@@ -130,9 +130,9 @@ class FlightService {
         getArrivalFlightListBasedOnTimeQuery = `select f.id as id, flight_number, status, source, destination, time_of_flight, a.name as airline 
         from flight as f join airline as a
         on f.airline_id = a.id
-        where time_of_flight >=current_timestamp()
-        and time_of_flight <= DATE_ADD(current_timestamp(),interval 4 hour)
-        and time_of_flight >= DATE_ADD(current_timestamp(), interval 2 hour)
+        where time_of_flight >= CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')
+        and time_of_flight <= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 4 hour)
+        and time_of_flight >= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 2 hour)
         and status = '${status}'
           `
       }

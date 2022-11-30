@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom';
 const FlightTable = ({flightListState,update}) => {
   const navigate = useNavigate();
   const handleUpdate = (row) => {
-    console.log(row)
     setTimeout(() => {
       navigate(`/flight/update/${row.id}`);
     }, 2000);
