@@ -8,5 +8,6 @@ router.get('/list/all', FlightController.getFlight);
 router.get('/list/airline', FlightController.getFlightBasedOnAirline);
 router.get('/list', FlightController.getFlightListBasedOnTimeAndStatus);
 router.get('/:id', FlightController.geFlightDetailsBasedOnId);
+router.get('/list/arrival/nobag', FlightController.getArrivalFlightListBasedOnBaggageCarousel);
 export default router;
 

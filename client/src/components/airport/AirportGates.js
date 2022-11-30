@@ -6,7 +6,6 @@ import { fetchTerminalListService } from '../../services/terminalService';
 import GateTable from './GateTable';
 import { useNavigate } from 'react-router-dom';
 import InfoIcon from '@mui/icons-material/Info';
-import GateForm from './GateForm';
 
 function createData(terminal) {
     return { terminal};
