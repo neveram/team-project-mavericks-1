@@ -22,7 +22,7 @@ class FlightService {
             status = '${status}',
             destination = '${destination}',
             time_of_flight = '${time_of_flight}',
-            bagCarousel = '${bagCarousel}'
+            bagCarousel = ${bagCarousel}
             WHERE id = ${flight_id};
         `;
         let flightAddQuery = `INSERT INTO flight (
