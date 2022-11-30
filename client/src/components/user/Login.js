@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 import Radio from '@mui/material/Radio';
 import { signIn } from '../../services/userService';
@@ -37,7 +37,6 @@ const Login = () => {
     const setAuthState = val[2];
     const setUserDetailsLocally = val[5];
     const userDetails = val[3];
-
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
@@ -51,7 +50,7 @@ const Login = () => {
             setAuthState(true);
             setUserDetailsLocally({...userDetails, ...response.data.payload});
             setTimeout(()=>{
-                navigate('/airline-flights');
+                navigate('/dashboard');
             }, 500);
         }
         else{

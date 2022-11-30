@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Divider from '@mui/material/Divider';
+import { AuthContext } from '../contexts/AuthContextProvider';
 const Dashboard = ( ) => {
 
+    const authContext = useContext(AuthContext);
+    const {role} = authContext[3];
     const navigate = useNavigate();
 
     const Item = styled(Paper)(({ theme }) => ({
@@ -58,21 +61,33 @@ const Dashboard = ( ) => {
             </Stack>
             </div>
             <br></br>
-            <Divider></Divider>
+            {
+                (role === 'airline') && (
+                    <>
+                    <Divider></Divider>
+                    <br></br>
+                    <div style={{justifyContent: 'center'}}>
+                        <Button variant="contained" onClick={redirectToAirlineService}>
+                            Go to Airline Handling Service
+                        </Button>
+                    </div>
+                    </>
+                )
+            }
             <br></br>
-            <div style={{justifyContent: 'center'}}>
-                <Button variant="contained" onClick={redirectToAirlineService}>
-                    Go to Airline Handling Service
-                </Button>
-            </div>
-            <br></br>
-            <Divider></Divider>
-            <br></br>
-            <div style={{justifyContent: 'center'}}>
-                <Button variant="contained" onClick={redirectToArrivalFlights}>
-                    Go to Airport Handling Service
-                </Button>
-            </div>
+            {
+                (role === 'airport') && (
+                    <>
+                    <Divider></Divider>
+                    <br></br>
+                    <div style={{justifyContent: 'center'}}>
+                        <Button variant="contained" onClick={redirectToArrivalFlights}>
+                            Go to Airport Handling Service
+                        </Button>
+                    </div>
+                    </>
+                )
+            }
 
         </React.Fragment>
 
