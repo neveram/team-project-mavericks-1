@@ -1,7 +1,7 @@
 //SJSU CMPE 138 Spring 2022 TEAM3 
 
 import express from 'express';
-import cors from  'cors';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import mysql from 'mysql';
 import util from 'util';
@@ -15,6 +15,7 @@ import terminalRouter from './routes/terminalRoutes.js';
 import gateRouter from './routes/gateRoutes.js'
 import bagCarouselRouter from './routes/bagCarouselRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import { parseRowDataPacket } from './services/parsingService.js';
 
 const port = 5001;
 const corsConfig = {
@@ -27,7 +28,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.listen(port, () => {
@@ -35,17 +36,17 @@ app.listen(port, () => {
 })
 
 export const connection = mysql.createConnection({
-  host     : 'mavericksdatabase.cqpn9b5pnb1l.us-west-1.rds.amazonaws.com',
-  port     : 3306,
-  user     : 'admin',
-  password : 'admin1234',
-  database : "mavericksdatabase"
+  host: 'mavericksdatabase.cqpn9b5pnb1l.us-west-1.rds.amazonaws.com',
+  port: 3306,
+  user: 'admin',
+  password: 'admin1234',
+  database: "mavericksdatabase"
 });
 
 
 
- 
-connection.connect((err) =>{
+
+connection.connect((err) => {
   if (err) {
     console.error('error connecting: ' + err.stack);
     return;
@@ -67,9 +68,100 @@ app.use('/user', userRouter);
 
 
 
-// Cron Jobs
+//Cron Jobs
 
-// cron.schedule("*/10 * * * * *", function() {
-//   console.log("running a task every 10 second");
-//   //everything related to cron job goes here...
-// });
+cron.schedule("*/10 * * * * *", function() {
+  console.log("running a task every 10 second");
+  assignGate();
+});
+
+
+
+const assignGate = async () => {
+
+  let ts = Date.now();
+  const GateavailableQuery = `SELECT id, status FROM gate where status="available"`;
+  try {
+    const response = await connection.query(GateavailableQuery);
+    const parsedResponsegate = parseRowDataPacket(response);
+    console.log(parsedResponsegate);
+
+  const GateinuseQuery = `SELECT 
+    id,
+    time_of_flight
+    from flight
+    where time_of_flight >= CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')
+    and time_of_flight <= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 1 hour)
+    and id not in ( select assigned from gate where assigned is not null);`;
+
+    const response2 = await connection.query(GateinuseQuery);
+    const parsedResponseflight = parseRowDataPacket(response2);
+    console.log(parsedResponseflight);
+    const map1 = {};
+    // console.log(parsedResponsegate.pop()["id"])
+    // console.log(parsedResponseflight.pop()["id"])
+  while(parsedResponseflight.length > 0){
+    //console.log("ki")
+    map1[parsedResponsegate.pop()["id"]] = parsedResponseflight.pop()["id"];
+  }
+  console.log(map1);
+  // for(let key in map1){
+  //   console.log(key,map1[key]);
+  // }
+  let Gateupdatequery = `Update gate set status="inuse" , assigned = case`
+  let keyarray = '('
+  for(let key in map1){
+      const x = ' when id = "' + key.toString() + '" then "' + map1[key].toString() +'"'
+      //console.log("x",x)
+      Gateupdatequery += x
+      keyarray+=key.toString()
+      keyarray+=','
+  }
+  keyarray=keyarray.substring(0,keyarray.length-1)
+  keyarray+=')'
+  console.log("keyarray",keyarray)
+  Gateupdatequery += ' end where id in '
+  Gateupdatequery += keyarray
+  const response3 = await connection.query(Gateupdatequery);
+    const parsedResponseupdate = parseRowDataPacket(response3);
+    console.log(Gateupdatequery);
+}
+
+  catch (e) {
+    console.log(e);
+    return {
+      success: false,
+      message: e.message
+    }
+  }
+
+  
+
+  
+
+  
+
+  // const flightunassignedQuery = `SELECT 
+  // id,
+  // flight_number,
+  // status,
+  // time_of_flight 
+  // from flight
+  // where time_of_flight >= CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')
+  // and time_of_flight <= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 1 hour)`;
+  // try {
+  //   const response = await connection.query(flightunassignedQuery);
+  //   const parsedResponse = parseRowDataPacket(response);
+  // }
+  // catch (e) {
+  //   console.log(e);
+  //   return {
+  //     success: false,
+  //     message: e.message
+  //   }
+  // }
+}
+
+
+
+//assignGate();

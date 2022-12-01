@@ -76,7 +76,7 @@ class GateService {
       }
 
       getGateBasedOnTerminal = async ({terminal_number}) => {
-        const getGateListBasedOnTerminalQuery = `select t.terminal as terminal,gate,g.status as status  from 
+        const getGateListBasedOnTerminalQuery = `select t.terminal as terminal,gate,g.status as status from 
         gate as g inner join terminal as t on g.terminal = t.id where t.id = ${terminal_number};`
   
         try{

@@ -78,6 +78,7 @@ class FlightService {
       }
       catch(e){
         console.log(e);
+        console.log(parsedResponse)
         return{
           success: false,
           message: e.message
