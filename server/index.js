@@ -70,62 +70,63 @@ app.use('/user', userRouter);
 
 //Cron Jobs
 
-// cron.schedule("*/10 * * * * *", function() {
-//   console.log("running a task every 10 second");
-//   assignGate();
-// });
-
+cron.schedule("*/10 * * * * *", function() {
+  console.log("running a task every 10 second");
+  assignGate();
+  FreeGate();
+});
 
 
 const assignGate = async () => {
-
-  let ts = Date.now();
   const GateavailableQuery = `SELECT id, status FROM gate where status="available"`;
   try {
     const response = await connection.query(GateavailableQuery);
     const parsedResponsegate = parseRowDataPacket(response);
-    console.log(parsedResponsegate);
+    //console.log(parsedResponsegate);
 
-  const GateinuseQuery = `SELECT 
-    id,
-    time_of_flight
-    from flight
-    where time_of_flight >= CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')
-    and time_of_flight <= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 1 hour)
-    and id not in ( select assigned from gate where assigned is not null);`;
+    const GateinuseQuery = `SELECT 
+      id,
+      time_of_flight
+      from flight
+      where time_of_flight >= CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')
+      and time_of_flight <= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 1 hour)
+      and id not in ( select assigned from gate where assigned is not null);`;
 
-    const response2 = await connection.query(GateinuseQuery);
-    const parsedResponseflight = parseRowDataPacket(response2);
-    console.log(parsedResponseflight);
-    const map1 = {};
-    // console.log(parsedResponsegate.pop()["id"])
-    // console.log(parsedResponseflight.pop()["id"])
-  while(parsedResponseflight.length > 0){
-    //console.log("ki")
-    map1[parsedResponsegate.pop()["id"]] = parsedResponseflight.pop()["id"];
-  }
-  console.log(map1);
+      const response2 = await connection.query(GateinuseQuery);
+      const parsedResponseflight = parseRowDataPacket(response2);
+      //console.log(parsedResponseflight);
+      const map1 = {};
+      // console.log(parsedResponsegate.pop()["id"])
+      // console.log(parsedResponseflight.pop()["id"])
+    while(parsedResponseflight.length > 0){
+      //console.log("ki")
+      map1[parsedResponsegate.pop()["id"]] = parsedResponseflight.pop()["id"];
+    }
+    //console.log(map1);
   // for(let key in map1){
   //   console.log(key,map1[key]);
   // }
-  let Gateupdatequery = `Update gate set status="inuse" , assigned = case`
-  let keyarray = '('
-  for(let key in map1){
-      const x = ' when id = "' + key.toString() + '" then "' + map1[key].toString() +'"'
-      //console.log("x",x)
-      Gateupdatequery += x
-      keyarray+=key.toString()
-      keyarray+=','
-  }
-  keyarray=keyarray.substring(0,keyarray.length-1)
-  keyarray+=')'
-  console.log("keyarray",keyarray)
-  Gateupdatequery += ' end where id in '
-  Gateupdatequery += keyarray
-  const response3 = await connection.query(Gateupdatequery);
+    
+    if (Object.keys(map1).length >=1){
+    let Gateupdatequery = `Update gate set status="inuse" , assigned = case`
+    let keyarray = '('
+    for(let key in map1){
+        const x = ' when id = "' + key.toString() + '" then "' + map1[key].toString() +'"'
+        //console.log("x",x)
+        Gateupdatequery += x
+        keyarray+=key.toString()
+        keyarray+=','
+    }
+    keyarray=keyarray.substring(0,keyarray.length-1)
+    keyarray+=')'
+    console.log("keyarray",keyarray)
+    Gateupdatequery += ' end where id in '
+    Gateupdatequery += keyarray
+    const response3 = await connection.query(Gateupdatequery);
     const parsedResponseupdate = parseRowDataPacket(response3);
-    console.log(Gateupdatequery);
-}
+    //console.log(Gateupdatequery);
+  }
+  }
 
   catch (e) {
     console.log(e);
@@ -134,34 +135,41 @@ const assignGate = async () => {
       message: e.message
     }
   }
-
-  
-
-  
-
-  
-
-  // const flightunassignedQuery = `SELECT 
-  // id,
-  // flight_number,
-  // status,
-  // time_of_flight 
-  // from flight
-  // where time_of_flight >= CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')
-  // and time_of_flight <= DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 1 hour)`;
-  // try {
-  //   const response = await connection.query(flightunassignedQuery);
-  //   const parsedResponse = parseRowDataPacket(response);
-  // }
-  // catch (e) {
-  //   console.log(e);
-  //   return {
-  //     success: false,
-  //     message: e.message
-  //   }
-  // }
 }
 
+const FreeGate = async () => {
+  const GateinuseQuery = `SELECT g.id FROM mavericksdatabase.gate g 
+  join mavericksdatabase.flight f on g.assigned=f.id
+  where g.status = "inuse" and
+  ((f.status="departure" and 
+  f.time_of_flight < CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific')) or 
+  (f.status="arrival") and 
+  f.time_of_flight < DATE_ADD(CONVERT_TZ(current_timestamp(), 'GMT', 'US/Pacific'),interval 1 hour))`;
+  try {
+    const response = await connection.query(GateinuseQuery);
+    const parsedResponsegateinuse = parseRowDataPacket(response);
+    //console.log(parsedResponsegateinuse);
 
 
-//assignGate();
+
+// pass a function to map
+const map1 = parsedResponsegateinuse.map(x => x.id);
+//map1.push(9)
+//console.log(map1)
+
+const freegateids =`update gate set assigned=null, status="available" where id in (${map1})`
+
+
+  }
+    catch (e) {
+      console.log(e);
+      return {
+        success: false,
+        message: e.message
+      }
+    }
+  }
+
+ 
+
+
