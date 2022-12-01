@@ -72,8 +72,8 @@ app.use('/user', userRouter);
 
 cron.schedule("*/10 * * * * *", function() {
   console.log("running a task every 10 second");
-  assignGate();
   FreeGate();
+  assignGate();
 });
 
 
