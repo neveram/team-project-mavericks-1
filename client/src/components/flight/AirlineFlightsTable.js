@@ -33,8 +33,8 @@ const ArilineFlightsTable = () => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
 
-  const authLoadingState = authContext[0];
-  const {role_id} = authContext[3];
+  const { authLoadingState, userDetails } = authContext;
+  const {role_id} = userDetails;
 
   const getFlightListForCurrentAirline = async () => {
     //Need to get airline id based on user login

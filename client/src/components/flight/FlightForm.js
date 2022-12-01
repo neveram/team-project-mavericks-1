@@ -34,7 +34,8 @@ const FlightForm = () => {
 
     // need to get from user context
   const authContext = useContext(AuthContext);
-  const {role_id,role} = authContext[3];
+  const {userDetails} = authContext;
+  const {role_id,role} = userDetails;
   const [flightState, setFlightState] = useState({airline_id: role_id, bagCarousel: 1});
   const [selectedCarousel, setSelectedCarousel] = useState(1);
   const[bagCarousel, setBagCarouselState] = useState([]);

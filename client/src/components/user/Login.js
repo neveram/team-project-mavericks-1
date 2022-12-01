@@ -33,10 +33,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Login = () => {
-    const val = useContext(AuthContext);
-    const setAuthState = val[2];
-    const setUserDetailsLocally = val[5];
-    const userDetails = val[3];
+    const authContext = useContext(AuthContext);
+    const {setAuthState, setUserDetailsLocally, userDetails} = authContext;
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {

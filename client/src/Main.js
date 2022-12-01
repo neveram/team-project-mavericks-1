@@ -17,6 +17,7 @@ import BagCarousel from './components/airport/BagCarousel';
 import BagCarouselTable from './components/airport/BagCarouselTable';
 import BagCarouselForm from './components/airport/BagCarouselForm';
 import AirportDashboard from './components/airport/AirportDashboard';
+import NavBar from './components/Navbar';
 
 
 const Main = () => {
@@ -24,6 +25,8 @@ const Main = () => {
         <div>
             <AuthContext>
                 <Router>
+                    <NavBar/>
+                    <br></br>
                     <Routes>
                         <Route path="/dashboard"
                             element={<Dashboard />}

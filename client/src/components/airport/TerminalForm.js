@@ -28,7 +28,8 @@ const styles = {
 const TerminalForm = () => {
      // need to get from user context
   const authContext = useContext(AuthContext);
-   const {id} = authContext[3];
+  const {userDetails} = authContext;
+   const {id} = userDetails;
    const [terminalState, setTerminalState] = useState({terminal:"",status:"",airport: sessionStorage.getItem("airport")});
   const [loading, setLoading] = useState(false);
   const params = useParams();

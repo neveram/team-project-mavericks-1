@@ -25,9 +25,11 @@ const styles = {
   
 
 const GateForm = () => {
+  
 
-    const authContext = useContext(AuthContext);
-    const {id} = authContext[3];
+  const authContext = useContext(AuthContext);
+  const {userDetails} = authContext;
+  const {id} = userDetails;
    const [loading, setLoading] = useState(false);
    const params = useParams();
    const {id: terminal_id} = params;

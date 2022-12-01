@@ -10,7 +10,8 @@ import { AuthContext } from '../../contexts/AuthContextProvider';
 const AirportDashboard = () => {
 
     const authContext = useContext(AuthContext);
-    const {role} = authContext[3];
+    const {userDetails} = authContext;
+    const {role} = userDetails;
     const navigate = useNavigate();
 
     const Item = styled(Paper)(({ theme }) => ({

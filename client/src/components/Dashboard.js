@@ -9,7 +9,8 @@ import { AuthContext } from '../contexts/AuthContextProvider';
 const Dashboard = ( ) => {
 
     const authContext = useContext(AuthContext);
-    const {role} = authContext[3];
+    const {userDetails} = authContext;
+    const {role} = userDetails;
     const navigate = useNavigate();
 
     const Item = styled(Paper)(({ theme }) => ({
@@ -35,11 +36,11 @@ const Dashboard = ( ) => {
 
     return(
         <React.Fragment>
-            <div>
+            {/* <div>
                 <h1>
                     Mavericks Airport System
                 </h1>
-            </div>
+            </div> */}
             <div>
                 <p>
                     Welcome to Mavericks Airport System. This page will help you navigate across different parts of the service

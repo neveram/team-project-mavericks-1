@@ -18,6 +18,14 @@ const AuthContextProvider = ({children}) =>{
     window.localStorage.setItem("user", JSON.stringify(user));
   }
 
+  const logout = async () => {
+    setAuthLoadingState(true);
+    window.localStorage.removeItem("user");
+    setAuthState(false);
+    setUserDetails({});
+    setAuthLoadingState(false);
+    
+  }
   const fetUserDetailsLocally = async () => {
     let user = window.localStorage.getItem("user");
     if(user === null){
@@ -45,7 +53,7 @@ const AuthContextProvider = ({children}) =>{
 
       ) :
       (
-        <AuthContext.Provider value={[authLoadingState, authState, setAuthState, userDetails, setUserDetails, setUserDetailsLocally]}>
+        <AuthContext.Provider value={{authLoadingState, authState, setAuthState, userDetails, setUserDetails, setUserDetailsLocally, logout}}>
           {children}
         </AuthContext.Provider>
       )

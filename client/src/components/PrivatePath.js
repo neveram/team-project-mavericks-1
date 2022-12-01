@@ -10,8 +10,7 @@ const PrivatePath = ({children}) => {
   //Reads the context value
   const authContext = useContext(AuthContext);
 
-  const authState = authContext[1];
-  const authLoadingState = authContext[0];
+  const { authState, authLoadingState } = authContext;
   
   return(
     <React.Fragment>
